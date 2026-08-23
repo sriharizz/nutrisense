@@ -891,15 +891,18 @@
   </main>
 
   <script>
-    const EMOJIS = {
-      tomato: '🍅',
-      onion: '🧅',
-      cucumber: '🥒',
-      egg: '🥚',
-      potato: '🥔',
-      banana: '🍌',
-      bowl: '🥣'
-    };
+        const EMOJIS = {
+        tomato: '🍅',
+        onion: '🧅',
+        cucumber: '🥒',
+        egg: '🥚',
+        potato: '🥔',
+        banana: '🍌',
+        carrot: '🥕',
+        bowl: '🥣',
+        apple: '🍎',
+        orange: '🍊'
+      };
 
     let isMeasuring = false;
     let camIp = '10.126.26.171';
@@ -1044,23 +1047,31 @@
             `;
           } else {
             listEl.innerHTML = rems.map((r, idx) => {
-              const deltaG = (r.measured_weight_g || r.weight_g || 0).toFixed(1);
-              const itemCal = r.nutrition ? (r.nutrition.calories || 0) : 0;
-              return `
-                <div class="removal-card">
-                  <div class="removal-card-header">
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                      <span style="font-size: 1.1rem;">${EMOJIS[r.ingredient] || '🥗'}</span>
-                      <strong style="text-transform: capitalize; font-size: 0.9rem; color: #0f172a;">${r.ingredient}</strong>
+              const deltaG = (r.weight_delta_g ?? r.measured_weight_g ?? r.weight_g ?? 0).toFixed(1);
+                const nut = r.nutrition || {};
+                const itemCal = nut.calories_kcal ?? nut.calories ?? 0;
+                const itemProtein = nut.protein_g ?? nut.protein ?? 0;
+                const itemCarbs = nut.carbohydrates_g ?? nut.carbs_g ?? nut.carbohydrates ?? 0;
+                return `
+                  <div class="removal-card">
+                    <div class="removal-card-header">
+                      <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 1.2rem;">${EMOJIS[r.ingredient] || '🥗'}</span>
+                        <strong style="text-transform: capitalize; font-size: 0.95rem; color: #0f172a;">${r.ingredient}</strong>
+                        ${r.zone_id ? `<span style="font-size: 0.75rem; color: #64748b; background: #f1f5f9; padding: 1px 6px; border-radius: 4px;">Zone ${r.zone_id}</span>` : ''}
+                      </div>
+                      <div style="display: flex; gap: 10px; align-items: center;">
+                        <span style="color: #16a34a; font-weight: 700; font-size: 0.95rem;">-${deltaG}g</span>
+                        <span style="background: #e0f2fe; color: #0369a1; font-weight: 700; font-size: 0.8rem; padding: 2px 8px; border-radius: 6px;">${Number(itemCal).toFixed(1)} kcal</span>
+                      </div>
                     </div>
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                      <span style="color: #16a34a; font-weight: 700; font-size: 0.9rem;">-${deltaG}g</span>
-                      <span style="background: #e0f2fe; color: #0369a1; font-weight: 700; font-size: 0.78rem; padding: 2px 8px; border-radius: 6px;">${itemCal.toFixed(1)} kcal</span>
+                    <div style="display: flex; gap: 12px; font-size: 0.78rem; color: #64748b; margin-top: 4px;">
+                      <span>Protein: <strong>${Number(itemProtein).toFixed(1)}g</strong></span>
+                      <span>Carbs: <strong>${Number(itemCarbs).toFixed(1)}g</strong></span>
                     </div>
                   </div>
-                </div>
-              `;
-            }).join('');
+                `;
+              }).join('')
           }
 
           // Update Reconciliation
