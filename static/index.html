@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NutriSense | Cyber-Physical Smart Kitchen & Family Nutrition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #16a34a;
+      --primary-dark: #15803d;
+      --primary-light: #dcfce7;
+      --accent: #0284c7;
+      --bg: #f4f7f4;
+      --card-bg: rgba(255, 255, 255, 0.98);
+      --border: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    h1, h2, h3, h4, .brand-title { font-family: 'Outfit', sans-serif; }
+    .script-font { font-family: 'Caveat', cursive; }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: 
+        radial-gradient(ellipse at 50% 12%, rgba(34, 197, 94, 0.22) 0%, transparent 60%),
+        radial-gradient(circle at 12% 25%, rgba(132, 204, 22, 0.15) 0%, transparent 45%),
+        radial-gradient(circle at 88% 18%, rgba(245, 158, 11, 0.14) 0%, transparent 40%),
+        radial-gradient(circle at 50% 92%, rgba(16, 185, 129, 0.20) 0%, transparent 50%),
+        linear-gradient(150deg, #f0fdf4 0%, #e6f7ec 45%, #daf0e2 100%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* TOP EMBEDDED GLASS HEADER */
+    header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 0.8rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 6px 16px 6px 8px;
+      border-radius: 999px;
+      border: 1px solid #bbf7d0;
+    }
+    .brand-icon {
+      font-size: 1.3rem;
+      background: #dcfce7;
+      padding: 4px 8px;
+      border-radius: 999px;
+    }
+    .brand-text h1 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #14532d;
+      line-height: 1.1;
+    }
+    .brand-text span {
+      font-size: 0.65rem;
+      color: #16a34a;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    /* EMBEDDED NAV TABS */
+    .nav-tabs {
+      display: flex;
+      background: rgba(241, 245, 249, 0.9);
+      padding: 4px;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+      gap: 4px;
+    }
+    .nav-tab-btn {
+      background: transparent;
+      border: none;
+      padding: 0.55rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #475569;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .nav-tab-btn:hover { color: #0f172a; }
+    .nav-tab-btn.active {
+      background: #15803d;
+      color: #ffffff;
+      box-shadow: 0 2px 10px rgba(22, 163, 74, 0.35);
+    }
+
+    /* LIVE SCALE HEADER PILL */
+    .header-scale-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      color: #15803d;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 8px rgba(22, 163, 74, 0.15);
+    }
+    .live-pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    }
+
+    /* USER BADGE */
+    .header-user-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+    .user-avatar-circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #dcfce7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+    }
+
+    /* MAIN CONTAINER & TABS */
+    main {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* TAB 1: OVERVIEW HERO */
+    #tabHome {
+      padding: 2.5rem 2rem;
+      max-width: 1280px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .overview-hero-card {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-pill {
+      background: #dcfce7;
+      color: #166534;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .hero-title {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+    .hero-title span {
+      background: linear-gradient(135deg, #16a34a 0%, #0284c7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      color: #475569;
+      font-size: 1.1rem;
+      max-width: 720px;
+      line-height: 1.6;
+    }
+    .hero-cta-btn {
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+      color: white;
+      border: none;
+      padding: 1rem 2.2rem;
+      border-radius: 999px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(22, 163, 74, 0.35);
+      transition: all 0.2s;
+    }
+    .hero-cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(22, 163, 74, 0.45);
+    }
+
+    /* GRID FEATURES */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .feature-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+    .feature-card h3 {
+      font-size: 1.15rem;
+      color: #0f172a;
+      margin-bottom: 0.5rem;
+    }
+    .feature-card p {
+      font-size: 0.9rem;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    /* TAB 2: LIVE PREP BOARD */
+    #tabBoard {
+      padding: 1.5rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .board-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 1024px) {
+      .board-layout { grid-template-columns: 1fr; }
+    }
+
+    .prep-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .prep-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .prep-card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* CAMERA & ZONE VIEWPORT */
+    .cam-viewport-wrapper {
+      position: relative;
+      width: 100%;
+      background: #0f172a;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+    }
+    #camStreamCanvas {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .cam-hud-overlay {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+    .hud-badge {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(8px);
+      color: #38bdf8;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .hud-scale-badge {
+      background: rgba(22, 163, 74, 0.85);
+      color: white;
+      border-color: rgba(74, 222, 128, 0.4);
+      font-size: 0.85rem;
+      padding: 4px 12px;
+    }
+
+    /* 4-ZONE MATRIX STATUS BAR */
+    .zone-matrix-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 1rem;
+    }
+    .zone-badge {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 8px 6px;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #64748b;
+      transition: all 0.2s;
+    }
+    .zone-badge.occupied {
+      background: #f0fdf4;
+      border-color: #86efac;
+      color: #15803d;
+      box-shadow: 0 2px 6px rgba(34, 197, 94, 0.15);
+    }
+
+    /* TELEMETRY METERS */
+    .telemetry-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    .telemetry-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px 12px;
+      text-align: center;
+    }
+    .telemetry-label { font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+    .telemetry-val { font-size: 1.35rem; font-weight: 800; color: #0f172a; margin-top: 2px; }
+    .telemetry-val.live { color: #16a34a; }
+
+    /* ACTION BUTTONS */
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    .action-btn {
+      flex: 1;
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-start { background: #16a34a; color: white; box-shadow: 0 2px 8px rgba(22, 163, 74, 0.25); }
+    .btn-start:hover { background: #15803d; }
+    .btn-stop { background: #ef4444; color: white; box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25); }
+    .btn-stop:hover { background: #dc2626; }
+    .btn-secondary { background: #ffffff; border-color: #cbd5e1; color: #334155; }
+    .btn-secondary:hover { background: #f1f5f9; }
+    .btn-danger-outline { background: #fff1f2; border-color: #fca5a5; color: #dc2626; }
+    .btn-danger-outline:hover { background: #fee2e2; }
+
+    /* NUTRIENT LEDGER */
+    .ledger-ring-box {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1rem;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      margin-bottom: 1rem;
+    }
+    .ring-wrapper {
+      width: 80px;
+      height: 80px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ring-svg {
+      transform: rotate(-90deg);
+      width: 100%;
+      height: 100%;
+    }
+    .ring-bg { fill: none; stroke: #e2e8f0; stroke-width: 8; }
+    .ring-fill {
+      fill: none;
+      stroke: #16a34a;
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 226;
+      stroke-dashoffset: 60;
+      transition: stroke-dashoffset 0.5s ease;
+    }
+    .ring-text-center {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .ring-cal-val { font-size: 1.2rem; font-weight: 800; color: #0f172a; line-height: 1; }
+    .ring-cal-lbl { font-size: 0.6rem; color: #64748b; font-weight: 700; margin-top: 2px; }
+
+    .macro-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+    .macro-bar-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #334155;
+    }
+    .macro-bar-item strong { color: #0f172a; }
+
+    /* REMOVAL HISTORY LIST */
+    .removal-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 250px;
+      overflow-y: auto;
+      margin-top: 0.5rem;
+    }
+    .removal-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .removal-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* TAB 3: FAMILY HUB */
+    #tabFamily {
+      padding: 1.5rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .family-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .profile-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .profile-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #dcfce7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+    .profile-info h3 { font-size: 1.05rem; color: #0f172a; }
+    .profile-info span { font-size: 0.75rem; color: #64748b; }
+    .profile-macros {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      background: #f8fafc;
+      padding: 8px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .profile-macros div span { font-size: 0.65rem; color: #64748b; display: block; }
+    .profile-macros div strong { font-size: 0.85rem; color: #0f172a; }
+    .btn-log-portion {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      color: #15803d;
+      padding: 8px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .btn-log-portion:hover { background: #dcfce7; }
+
+    /* PANTRY & AI */
+    .pantry-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+    .pantry-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 1rem;
+    }
+    .pantry-item-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+    }
+    .pantry-low-tag {
+      background: #fee2e2;
+      color: #dc2626;
+      font-weight: 800;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HEADER -->
+  <header>
+    <div class="brand-container">
+      <div class="brand-icon">🥗</div>
+      <div class="brand-text">
+        <h1>NutriSense</h1>
+        <span>CYBER-PHYSICAL NUTRITION HUB</span>
+      </div>
+    </div>
+
+    <!-- LIVE SCALE STREAM INDICATOR (Visible Across All Tabs) -->
+    <div class="header-scale-pill">
+      <div class="live-pulse-dot"></div>
+      <span id="navLiveScaleText">Scale: 0.0g</span>
+    </div>
+
+    <div class="nav-tabs">
+      <button id="tabBtnHome" class="nav-tab-btn" onclick="switchTab('home')">🏠 Overview</button>
+      <button id="tabBtnBoard" class="nav-tab-btn active" onclick="switchTab('board')">⚖️ Live Prep Board</button>
+      <button id="tabBtnFamily" class="nav-tab-btn" onclick="switchTab('family')">👨‍👩‍👧‍👦 Family Health & AI Hub</button>
+    </div>
+
+    <div class="header-user-badge">
+      <div class="user-avatar-circle">👤</div>
+      <div>
+        <strong style="color: #166534; font-size: 0.8rem;">The Hari Household</strong>
+        <span style="color: var(--text-muted); font-size: 0.7rem; display: block;">Master Admin</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN BODY CONTENT -->
+  <main>
+
+    <!-- ==========================================
+         TAB 1: OVERVIEW
+         ========================================== -->
+    <section id="tabHome" class="tab-content">
+      <div class="overview-hero-card">
+        <div class="hero-pill">⚡ Real-Time Cyber-Physical System Active</div>
+        <h1 class="hero-title">Precision Dietary Intelligence<br><span>Powered by Spatial AI & Load Telemetry</span></h1>
+        <p class="hero-sub">NutriSense transforms everyday food preparation into an automated, non-invasive nutritional ledger using 4-zone computer vision, high-speed strain gauge telemetry, and ICMR-NIN reference analytics.</p>
+        <button class="hero-cta-btn" onclick="switchTab('board')">▶ Launch Live Prep Board</button>
+      </div>
+
+      <div class="overview-grid">
+        <div class="feature-card">
+          <div class="feature-icon">⚖️</div>
+          <h3>4-Cell Strain Gauge Scale</h3>
+          <p>Milligram-precision load cell matrix streaming continuous portion changes over high-speed Wi-Fi.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">👁️</div>
+          <h3>YOLOv8 Spatial Matrix</h3>
+          <p>Real-time ingredient classification across 4 discrete physical cutting zones.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>ICMR-NIN IFCT Engine</h3>
+          <p>Clinically validated macro and micronutrient breakdown matching Indian dietary standards.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">👨‍👩‍👧‍👦</div>
+          <h3>Family Health Profiles</h3>
+          <p>Automated dietary tracking, Smart Pantry depletion logging, and AI dietitian guidance.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TAB 2: LIVE PREP BOARD (DEFAULT ACTIVE)
+         ========================================== -->
+    <section id="tabBoard" class="tab-content active">
+      <div class="board-layout">
+        
+        <!-- LEFT: CAMERA & SPATIAL MATRIX -->
+        <div class="prep-card">
+          <div class="prep-card-header">
+            <div class="prep-card-title">
+              <span>📹</span> 4-Zone Spatial Camera & Scale Matrix
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <span id="fsmStateBadge" class="hud-badge" style="color: #16a34a; background: #dcfce7; border-color: #bbf7d0;">IDLE</span>
+            </div>
+          </div>
+
+          <div class="cam-viewport-wrapper">
+            <canvas id="camStreamCanvas" width="640" height="480"></canvas>
+            <div class="cam-hud-overlay">
+              <span class="hud-badge">ESP32-CAM (10.126.26.171)</span>
+              <span id="hudScaleWeight" class="hud-badge hud-scale-badge">Scale: 0.0g</span>
+            </div>
+          </div>
+
+          <!-- 4 ZONES STATUS -->
+          <div class="zone-matrix-bar">
+            <div id="badgeZone1" class="zone-badge">Zone 1: READY</div>
+            <div id="badgeZone2" class="zone-badge">Zone 2: READY</div>
+            <div id="badgeZone3" class="zone-badge">Zone 3: READY</div>
+            <div id="badgeZone4" class="zone-badge">Zone 4: READY</div>
+          </div>
+
+          <!-- LIVE TELEMETRY ROW -->
+          <div class="telemetry-row">
+            <div class="telemetry-box">
+              <div class="telemetry-label">Initial Mass</div>
+              <div id="statInitMass" class="telemetry-val">0.0g</div>
+            </div>
+            <div class="telemetry-box" style="background: #f0fdf4; border-color: #86efac;">
+              <div class="telemetry-label" style="color: #15803d;">Current Load</div>
+              <div id="statCurrentLoad" class="telemetry-val live">0.0g</div>
+            </div>
+            <div class="telemetry-box">
+              <div class="telemetry-label">Baseline Tare</div>
+              <div id="statBaselineTare" class="telemetry-val">0.0g</div>
+            </div>
+          </div>
+
+          <!-- ACTION BUTTONS -->
+          <div class="btn-row">
+            <button id="btnMainAction" class="action-btn btn-start" onclick="toggleMeasurement()">
+              ▶ START MEASUREMENT
+            </button>
+            <button class="action-btn btn-secondary" onclick="tareScale()">
+              ⚖️ TARE SCALE
+            </button>
+            <button class="action-btn btn-danger-outline" onclick="resetSession()">
+              🔄 RESET
+            </button>
+          </div>
+        </div>
+
+        <!-- RIGHT: NUTRIENT LEDGER & REMOVALS -->
+        <div class="prep-card">
+          <div class="prep-card-header">
+            <div class="prep-card-title">
+              <span>🥗</span> Active Nutrition Ledger
+            </div>
+            <span style="font-size: 0.75rem; color: #16a34a; font-weight: 700;">ICMR-NIN IFCT 2017</span>
+          </div>
+
+          <!-- CALORIE RING & MACROS -->
+          <div class="ledger-ring-box">
+            <div class="ring-wrapper">
+              <svg class="ring-svg" viewBox="0 0 80 80">
+                <circle class="ring-bg" cx="40" cy="40" r="36"></circle>
+                <circle id="ringProgress" class="ring-fill" cx="40" cy="40" r="36"></circle>
+              </svg>
+              <div class="ring-text-center">
+                <span id="ringCalories" class="ring-cal-val">0</span>
+                <span class="ring-cal-lbl">KCAL</span>
+              </div>
+            </div>
+
+            <div class="macro-bars">
+              <div class="macro-bar-item">
+                <span>Protein</span>
+                <strong id="macroProtein">0.0g</strong>
+              </div>
+              <div class="macro-bar-item">
+                <span>Carbohydrates</span>
+                <strong id="macroCarbs">0.0g</strong>
+              </div>
+              <div class="macro-bar-item">
+                <span>Fat</span>
+                <strong id="macroFat">0.0g</strong>
+              </div>
+              <div class="macro-bar-item">
+                <span>Dietary Fiber</span>
+                <strong id="macroFiber">0.0g</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- MASS CONSERVATION STATUS -->
+          <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 12px; padding: 10px 14px; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 0.8rem; font-weight: 700; color: #166534;">Mass Conservation:</div>
+            <div id="reconcileBadge" style="font-size: 0.8rem; font-weight: 800; color: #15803d;">PASSED (100.0%)</div>
+          </div>
+
+          <!-- REMOVAL EVENTS LIST -->
+          <div class="prep-card-title" style="font-size: 0.95rem; margin-bottom: 0.5rem;">
+            <span>📋</span> Confirmed Removals History
+          </div>
+          <div id="removalsList" class="removal-list">
+            <div style="text-align: center; color: #94a3b8; font-size: 0.85rem; padding: 2rem 0;">
+              No ingredients removed yet.<br>Click Start Measurement and portion ingredients.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TAB 3: FAMILY HEALTH & AI HUB
+         ========================================== -->
+    <section id="tabFamily" class="tab-content">
+      <div class="family-grid">
+        
+        <!-- PROFILE 1: HARI -->
+        <div class="profile-card">
+          <div class="profile-header">
+            <div class="profile-avatar">👨‍💻</div>
+            <div class="profile-info">
+              <h3>Hari (Self)</h3>
+              <span>Muscle Building (Target: 2,200 kcal)</span>
+            </div>
+          </div>
+          <div class="profile-macros">
+            <div><span>Calories</span><strong id="hariCal">650</strong></div>
+            <div><span>Protein</span><strong id="hariProt">48g</strong></div>
+            <div><span>Carbs</span><strong id="hariCarbs">72g</strong></div>
+            <div><span>Fat</span><strong id="hariFat">18g</strong></div>
+          </div>
+          <button class="btn-log-portion" onclick="logPortionTo('user_hari')">🍽️ Log Active Prep to Hari</button>
+        </div>
+
+        <!-- PROFILE 2: MOM -->
+        <div class="profile-card">
+          <div class="profile-header">
+            <div class="profile-avatar">👩</div>
+            <div class="profile-info">
+              <h3>Mom</h3>
+              <span>Diabetes Friendly (Target: 1,600 kcal)</span>
+            </div>
+          </div>
+          <div class="profile-macros">
+            <div><span>Calories</span><strong id="momCal">420</strong></div>
+            <div><span>Protein</span><strong id="momProt">22g</strong></div>
+            <div><span>Carbs</span><strong id="momCarbs">45g</strong></div>
+            <div><span>Fat</span><strong id="momFat">12g</strong></div>
+          </div>
+          <button class="btn-log-portion" onclick="logPortionTo('user_mom')">🍽️ Log Active Prep to Mom</button>
+        </div>
+
+        <!-- PROFILE 3: DAD -->
+        <div class="profile-card">
+          <div class="profile-header">
+            <div class="profile-avatar">👨</div>
+            <div class="profile-info">
+              <h3>Dad</h3>
+              <span>Heart Health & Low Sodium (Target: 1,800 kcal)</span>
+            </div>
+          </div>
+          <div class="profile-macros">
+            <div><span>Calories</span><strong id="dadCal">510</strong></div>
+            <div><span>Protein</span><strong id="dadProt">28g</strong></div>
+            <div><span>Carbs</span><strong id="dadCarbs">58g</strong></div>
+            <div><span>Fat</span><strong id="dadFat">15g</strong></div>
+          </div>
+          <button class="btn-log-portion" onclick="logPortionTo('user_dad')">🍽️ Log Active Prep to Dad</button>
+        </div>
+
+        <!-- SMART PANTRY INVENTORY -->
+        <div class="pantry-card">
+          <div class="prep-card-title">
+            <span>📦</span> Smart Pantry Inventory
+          </div>
+          <div id="pantryList" class="pantry-list">
+            <div class="pantry-item-card">
+              <div><strong>🥒 Cucumber</strong><div style="color: #64748b; font-size: 0.72rem;">Stock: 450g</div></div>
+              <span style="color:#16a34a;font-weight:700;font-size:0.75rem;">OK</span>
+            </div>
+            <div class="pantry-item-card">
+              <div><strong>🍅 Tomato</strong><div style="color: #64748b; font-size: 0.72rem;">Stock: 320g</div></div>
+              <span style="color:#16a34a;font-weight:700;font-size:0.75rem;">OK</span>
+            </div>
+            <div class="pantry-item-card">
+              <div><strong>🧅 Onion</strong><div style="color: #64748b; font-size: 0.72rem;">Stock: 90g</div></div>
+              <span class="pantry-low-tag">LOW</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const EMOJIS = {
+      tomato: '🍅',
+      onion: '🧅',
+      cucumber: '🥒',
+      egg: '🥚',
+      potato: '🥔',
+      banana: '🍌',
+      bowl: '🥣'
+    };
+
+    let isMeasuring = false;
+    let camIp = '10.126.26.171';
+
+    // TAB SWITCHING LOGIC
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+
+      if (tabId === 'home') {
+        document.getElementById('tabHome').classList.add('active');
+        document.getElementById('tabBtnHome').classList.add('active');
+      } else if (tabId === 'board') {
+        document.getElementById('tabBoard').classList.add('active');
+        document.getElementById('tabBtnBoard').classList.add('active');
+      } else if (tabId === 'family') {
+        document.getElementById('tabFamily').classList.add('active');
+        document.getElementById('tabBtnFamily').classList.add('active');
+        loadFamilyHubData();
+      }
+    }
+
+    // ACTIONS
+    async function toggleMeasurement() {
+      if (!isMeasuring) {
+        await fetch('/api/v1/sessions/start', { method: 'POST' });
+      } else {
+        await fetch('/api/v1/sessions/stop', { method: 'POST' });
+      }
+    }
+
+    async function tareScale() {
+      await fetch('/api/v1/sessions/tare', { method: 'POST' });
+    }
+
+    async function resetSession() {
+      await fetch('/api/v1/sessions/reset', { method: 'POST' });
+    }
+
+    async function logPortionTo(profileId) {
+      const statusRes = await fetch('/api/v1/sessions/status');
+      if (statusRes.ok) {
+        const s = await statusRes.json();
+        const totals = s.totals || {};
+        await fetch('/api/v1/profiles/log-portion', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            profile_id: profileId,
+            meal_name: 'NutriSense Prepared Meal',
+            portion_weight_g: totals.measured_food_mass_g || 175.0,
+            calories: totals.calories_kcal || totals.calories || 0,
+            protein: totals.protein_g || 0,
+            carbs: totals.carbs_g || 0,
+            fat: totals.fat_g || 0,
+            fiber: totals.fiber_g || 0
+          })
+        });
+        alert('✅ Portion logged to profile!');
+        loadFamilyHubData();
+      }
+    }
+
+    // FAMILY HUB FETCHER
+    async function loadFamilyHubData() {
+      try {
+        const [profRes, aiRes, pantryRes] = await Promise.all([
+          fetch('/api/v1/profiles'),
+          fetch('/api/v1/ai/recommendations'),
+          fetch('/api/v1/pantry')
+        ]);
+        if (pantryRes.ok) {
+          const pantry = await pantryRes.json();
+          const listEl = document.getElementById('pantryList');
+          if (listEl && pantry.items) {
+            listEl.innerHTML = pantry.items.map(i => `
+              <div class="pantry-item-card">
+                <div>
+                  <strong>${EMOJIS[i.item_name] || '🥗'} ${i.item_name.charAt(0).toUpperCase() + i.item_name.slice(1)}</strong>
+                  <div style="color: #64748b; font-size: 0.72rem;">Stock: ${i.current_stock_g}${i.unit}</div>
+                </div>
+                ${i.is_low_stock ? '<span class="pantry-low-tag">LOW</span>' : '<span style="color:#16a34a;font-weight:700;font-size:0.75rem;">OK</span>'}
+              </div>
+            `).join('');
+          }
+        }
+      } catch (err) {
+        console.error('Error loading family hub:', err);
+      }
+    }
+
+    // LIVE POLLING LOOP (Every 250ms)
+    setInterval(async () => {
+      try {
+        const statusRes = await fetch('/api/v1/sessions/status');
+        if (statusRes.ok) {
+          const s = await statusRes.json();
+          isMeasuring = s.is_measuring;
+
+          // Update Scale & Telemetry
+          const currentLoad = (s.current_load_g || 0).toFixed(1);
+          
+          // Header & HUD pills
+          document.getElementById('navLiveScaleText').textContent = 'Scale: ' + currentLoad + 'g';
+          document.getElementById('hudScaleWeight').textContent = 'Scale: ' + currentLoad + 'g';
+          document.getElementById('statCurrentLoad').textContent = currentLoad + 'g';
+          document.getElementById('statInitMass').textContent = (s.initial_total_mass_g || 0).toFixed(1) + 'g';
+          document.getElementById('statBaselineTare').textContent = (s.baseline_tare_g || 0).toFixed(1) + 'g';
+
+          // Update State Badge
+          const stateEl = document.getElementById('fsmStateBadge');
+          stateEl.textContent = s.fsm_state || 'IDLE';
+          stateEl.style.color = s.is_measuring ? '#16a34a' : '#64748b';
+
+          // Update Button State
+          const btn = document.getElementById('btnMainAction');
+          if (s.is_measuring) {
+            btn.className = 'action-btn btn-stop';
+            btn.innerHTML = '⏹ STOP MEASUREMENT';
+          } else {
+            btn.className = 'action-btn btn-start';
+            btn.innerHTML = '▶ START MEASUREMENT';
+          }
+
+          // Update Nutrient Ledger
+          const totals = s.totals || {};
+          const calTotal = totals.calories_kcal || totals.calories || 0;
+          document.getElementById('ringCalories').textContent = calTotal.toFixed(0);
+          document.getElementById('macroProtein').textContent = (totals.protein_g || 0).toFixed(1) + 'g';
+          document.getElementById('macroCarbs').textContent = (totals.carbs_g || 0).toFixed(1) + 'g';
+          document.getElementById('macroFat').textContent = (totals.fat_g || 0).toFixed(1) + 'g';
+          document.getElementById('macroFiber').textContent = (totals.fiber_g || 0).toFixed(1) + 'g';
+
+          // Update Removals List
+          const rems = s.removal_history || [];
+          const listEl = document.getElementById('removalsList');
+          if (rems.length === 0) {
+            listEl.innerHTML = `
+              <div style="text-align: center; color: #94a3b8; font-size: 0.85rem; padding: 2rem 0;">
+                No ingredients removed yet.<br>Click Start Measurement and portion ingredients.
+              </div>
+            `;
+          } else {
+            listEl.innerHTML = rems.map((r, idx) => {
+              const deltaG = (r.measured_weight_g || r.weight_g || 0).toFixed(1);
+              const itemCal = r.nutrition ? (r.nutrition.calories || 0) : 0;
+              return `
+                <div class="removal-card">
+                  <div class="removal-card-header">
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                      <span style="font-size: 1.1rem;">${EMOJIS[r.ingredient] || '🥗'}</span>
+                      <strong style="text-transform: capitalize; font-size: 0.9rem; color: #0f172a;">${r.ingredient}</strong>
+                    </div>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                      <span style="color: #16a34a; font-weight: 700; font-size: 0.9rem;">-${deltaG}g</span>
+                      <span style="background: #e0f2fe; color: #0369a1; font-weight: 700; font-size: 0.78rem; padding: 2px 8px; border-radius: 6px;">${itemCal.toFixed(1)} kcal</span>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('');
+          }
+
+          // Update Reconciliation
+          const rec = s.reconciliation || {};
+          const recBadge = document.getElementById('reconcileBadge');
+          if (rec.status === 'PASSED') {
+            recBadge.style.color = '#15803d';
+            recBadge.textContent = 'PASSED (100.0%)';
+          } else {
+            recBadge.style.color = '#eab308';
+            recBadge.textContent = 'ACCOUNTING...';
+          }
+        }
+      } catch (err) {
+        console.error('Telemetry error:', err);
+      }
+    }, 250);
+
+    // CAMERA & SPATIAL MATRIX STREAMER
+    const canvas = document.getElementById('camStreamCanvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+
+    setInterval(() => {
+      img.src = '/api/v1/hardware/cam-proxy?cam_ip=' + camIp + '&t=' + Date.now();
+    }, 250);
+
+    img.onload = async () => {
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+      try {
+        const b64 = canvas.toDataURL('image/jpeg', 0.6).split(',')[1];
+        const inferRes = await fetch('/api/v1/zones/infer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ frame: b64, conf_threshold: 0.25 })
+        });
+
+        if (inferRes.ok) {
+          const data = await inferRes.json();
+          if (data.zones) {
+            data.zones.forEach(z => {
+              const badge = document.getElementById('badgeZone' + z.zone_id);
+              if (badge) {
+                if (z.status === 'OCCUPIED' && z.item) {
+                  badge.className = 'zone-badge occupied';
+                  badge.innerHTML = (EMOJIS[z.item] || '🥗') + ' Zone ' + z.zone_id + ': ' + z.item.toUpperCase() + ' (' + Math.round(z.confidence * 100) + '%)';
+                } else {
+                  badge.className = 'zone-badge';
+                  badge.innerHTML = 'Zone ' + z.zone_id + ': READY';
+                }
+              }
+            });
+          }
+        }
+      } catch (err) {
+        // quiet catch
+      }
+    };
+  </script>
+</body>
+</html>

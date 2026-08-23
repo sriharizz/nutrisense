@@ -1,0 +1,10 @@
+﻿venv/
+__pycache__/
+*.pyc
+runs/
+*.log
+*.bak*
+temp_test.jpg
+Food-ingredients-4/
+Fruits-and-Vegetables-1/
+dataset_v5*/
