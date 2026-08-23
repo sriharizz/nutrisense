@@ -166,91 +166,98 @@ class SessionStateMachine:
                 final_drop = round(self.drop_start_weight - weight_g, 1)
                 
                 if final_drop >= 15.0:
-                    # STRICT ZONE IDENTIFICATION: Find which zone cleared (was occupied, now READY)
+                    # STRICT CAMERA-VERIFIED ZONE IDENTIFICATION
                     cleared_item = None
                     cleared_zone_id = None
                     
+                    # 1. Map currently active occupied zones directly from live camera feed
+                    active_camera_occupants = {}
                     if zones:
                         for z in zones:
                             zid = z.get("zone_id")
                             status = z.get("status")
                             item = z.get("item")
-                            # If this zone previously held an ingredient, but is now READY / item is None
-                            if self.zone_map.get(zid) and (status == "READY" or not item):
-                                cleared_item = self.zone_map[zid]
+                            if status == "OCCUPIED" and item:
+                                active_camera_occupants[zid] = item.lower()
+
+                    # 2. Strict Check: find which zone was mapped as occupied, but is NOW empty in camera
+                    for zid, mapped_item in self.zone_map.items():
+                        if mapped_item:
+                            # If camera no longer sees this zone occupied, or item is gone from this zone
+                            current_in_zone = active_camera_occupants.get(zid)
+                            if not current_in_zone or current_in_zone != mapped_item:
+                                cleared_item = mapped_item
                                 cleared_zone_id = zid
                                 break
-                    
-                    # If zone matching didn't trigger, check remaining occupied zones
-                    if not cleared_item:
-                        for zid, it in self.zone_map.items():
-                            if it:
-                                cleared_item = it
-                                cleared_zone_id = zid
-                                break
-                                
-                    if not cleared_item:
-                        cleared_item = "unknown"
 
-                    conf = (cv_confidence_map or {}).get(cleared_item, 0.95)
-                    event_id = f"evt_{int(now)}_{uuid.uuid4().hex[:4]}"
-                    
-                    # Compute portion nutrition
-                    nut = {}
-                    try:
-                        nut = nutrition_engine.calculate_ingredient_nutrition(cleared_item, final_drop)
-                    except Exception:
-                        pass
+                    # 3. ONLY commit if camera visually confirms that an ingredient left its zone!
+                    if cleared_item and cleared_zone_id:
+                        conf = (cv_confidence_map or {}).get(cleared_item, 0.95)
+                        event_id = f"evt_{int(now)}_{uuid.uuid4().hex[:4]}"
+                        
+                        # Compute portion nutrition
+                        nut = {}
+                        try:
+                            nut = nutrition_engine.calculate_ingredient_nutrition(cleared_item, final_drop)
+                        except Exception:
+                            pass
 
-                    commit_record = {
-                        "event_id": event_id,
-                        "session_id": self.session_id,
-                        "ingredient": cleared_item,
-                        "zone_id": cleared_zone_id,
-                        "weight_before_g": round(self.drop_start_weight, 1),
-                        "weight_after_g": round(weight_g, 1),
-                        "weight_delta_g": final_drop,
-                        "cv_confidence": conf,
-                        "status": "COMMITTED",
-                        "timestamp": now,
-                        "nutrition": nut
-                    }
-                    self.removal_history.append(commit_record)
-                    action_event = commit_record
+                        commit_record = {
+                            "event_id": event_id,
+                            "session_id": self.session_id,
+                            "ingredient": cleared_item,
+                            "zone_id": cleared_zone_id,
+                            "weight_before_g": round(self.drop_start_weight, 1),
+                            "weight_after_g": round(weight_g, 1),
+                            "weight_delta_g": final_drop,
+                            "cv_confidence": conf,
+                            "status": "COMMITTED",
+                            "timestamp": now,
+                            "nutrition": nut
+                        }
+                        self.removal_history.append(commit_record)
+                        action_event = commit_record
 
-                    # Mark this zone empty
-                    if cleared_zone_id and cleared_zone_id in self.zone_map:
+                        # Mark this zone empty in the active map
                         self.zone_map[cleared_zone_id] = None
 
-                    try:
-                        database.save_removal_event(
-                            event_id=event_id,
-                            session_id=self.session_id,
-                            ingredient=cleared_item,
-                            weight_before_g=self.drop_start_weight,
-                            weight_after_g=weight_g,
-                            weight_delta_g=final_drop,
-                            cv_confidence=conf,
-                            status="COMMITTED",
-                            timestamp=now
+                        try:
+                            database.save_removal_event(
+                                event_id=event_id,
+                                session_id=self.session_id,
+                                ingredient=cleared_item,
+                                weight_before_g=self.drop_start_weight,
+                                weight_after_g=weight_g,
+                                weight_delta_g=final_drop,
+                                cv_confidence=conf,
+                                status="COMMITTED",
+                                timestamp=now
+                            )
+                        except Exception:
+                            pass
+
+                        self.transition_to(
+                            SessionState.REMOVAL_COMMITTED,
+                            f"Verified removal: Zone {cleared_zone_id} ({cleared_item}) -{final_drop}g"
                         )
-                    except Exception:
-                        pass
+                        
+                        # Lock new baseline weight
+                        self.baseline_weight_g = round(weight_g, 1)
+                        self.last_removal_time = now
+                        self.stable_counter = 0
 
-                    self.transition_to(
-                        SessionState.REMOVAL_COMMITTED,
-                        f"Quadrant removal committed: Zone {cleared_zone_id} ({cleared_item}) -{final_drop}g"
-                    )
-                    
-                    # Lock new baseline weight
-                    self.baseline_weight_g = round(weight_g, 1)
-                    self.last_removal_time = now
-                    self.stable_counter = 0
-
-                    self.transition_to(
-                        SessionState.MEASUREMENT_ACTIVE,
-                        f"Baseline updated to {self.baseline_weight_g:.1f}g. Remaining zones: {self.zone_map}"
-                    )
+                        self.transition_to(
+                            SessionState.MEASUREMENT_ACTIVE,
+                            f"Baseline updated to {self.baseline_weight_g:.1f}g. Active zones: {self.zone_map}"
+                        )
+                    else:
+                        # Camera confirms all mapped items are still present on the board (e.g. hand touch or load shift)
+                        self.baseline_weight_g = round(weight_g, 1)
+                        self.stable_counter = 0
+                        self.transition_to(
+                            SessionState.MEASUREMENT_ACTIVE,
+                            f"Weight fluctuation ({final_drop}g) without zone vacancy ignored; baseline synced to {self.baseline_weight_g:.1f}g."
+                        )
                 else:
                     self.transition_to(SessionState.MEASUREMENT_ACTIVE, "Transient bounce resolved without net removal.")
 
