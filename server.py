@@ -1,3 +1,4 @@
+import ai_dietitian
 # Shared live telemetry dictionary
 HW_TELEMETRY = {"live_weight_g": 0.0, "last_seq": 0}
 last_inferred_classes = []
@@ -694,7 +695,20 @@ def log_portion_to_profile(data: dict):
         active = next((p for p in profiles if p.get("is_active")), profiles[0] if profiles else None)
         pid = active["profile_id"] if active else "prof_hari"
         
-    meal_name = data.get("meal_name", "Prepared Dish (NutriSense)")
+    import datetime
+    now_hour = datetime.datetime.now().hour
+    if 5 <= now_hour < 11:
+        default_slot = "Breakfast Salad Bowl"
+    elif 11 <= now_hour < 16:
+        default_slot = "Lunch Fresh Salad"
+    elif 16 <= now_hour < 19:
+        default_slot = "Evening Health Prep"
+    else:
+        default_slot = "Dinner Salad Portion"
+        
+    meal_name = data.get("meal_name")
+    if not meal_name or meal_name in ["NutriSense Prepared Meal", "Prepared Dish (NutriSense)"]:
+        meal_name = default_slot
     portion_weight_g = float(data.get("portion_weight_g", 50.0))
     calories = float(data.get("calories", 0.0))
     protein = float(data.get("protein", 0.0))
@@ -770,3 +784,39 @@ def get_ai_recommendations(profile_id: Optional[str] = None):
         "dietitian_insight": " ".join(insights),
         "grocery_suggestion": grocery_alert
     }
+
+
+@app.post("/api/v1/ai/analyze-portion")
+def ai_analyze_portion(data: dict):
+    person = data.get("person_name", "Hari")
+    meal = data.get("meal_name", "NutriSense Prepared Meal")
+    weight_g = float(data.get("portion_weight_g", 150.0))
+    cal = float(data.get("calories", 50.0))
+    prot = float(data.get("protein_g", 2.0))
+    carb = float(data.get("carbs_g", 10.0))
+    fat = float(data.get("fat_g", 0.5))
+    fib = float(data.get("fiber_g", 2.0))
+    ings = data.get("ingredients_used", [])
+    res = ai_dietitian.analyze_portion_nutrition(person, meal, weight_g, cal, prot, carb, fat, fib, ings)
+    return res
+
+@app.get("/api/v1/ai/pantry-recipes")
+def ai_pantry_recipes():
+    pantry = database.get_pantry_inventory()
+    res = ai_dietitian.generate_zero_waste_pantry_recipes(pantry)
+    return res
+
+
+@app.post("/api/v1/ai/chat")
+def ai_chat_endpoint(data: dict):
+    question = data.get("question", "What should I eat today?")
+    person = data.get("person_name", "Hari")
+    
+    # Get person's today consumed
+    profiles = database.get_all_family_profiles()
+    active = next((p for p in profiles if person.lower() in p["name"].lower()), None)
+    today_intake = active.get("today_consumed") if active else None
+    pantry = database.get_pantry_inventory()
+    
+    reply = ai_dietitian.ask_dietitian_chat(question, person, today_intake, pantry)
+    return {"reply": reply, "person": person}

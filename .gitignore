@@ -8,3 +8,7 @@ temp_test.jpg
 Food-ingredients-4/
 Fruits-and-Vegetables-1/
 dataset_v5*/
+ 
+.env
+*.db
+__pycache__/

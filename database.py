@@ -332,6 +332,25 @@ def get_all_family_profiles(db_path: str = "nutrisense.db"):
             "fat_g": round(stats["total_fat"], 1),
             "fiber_g": round(stats["total_fiber"], 1)
         }
+        
+        cur.execute("""
+            SELECT meal_name, portion_weight_g, calories, protein, carbs, fat, fiber, timestamp
+            FROM meal_intake_logs
+            WHERE profile_id = ?
+            ORDER BY timestamp DESC
+            LIMIT 6
+        """, (p["profile_id"],))
+        recent_rows = cur.fetchall()
+        import datetime
+        p["recent_logs"] = [
+            {
+                "meal_name": r["meal_name"],
+                "portion_weight_g": round(r["portion_weight_g"], 1),
+                "calories": round(r["calories"], 1),
+                "time_str": datetime.datetime.fromtimestamp(r["timestamp"]).strftime("%I:%M %p").lstrip("0")
+            }
+            for r in recent_rows
+        ]
         profiles.append(p)
     conn.close()
     return profiles

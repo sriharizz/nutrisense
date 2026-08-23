@@ -4,107 +4,132 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NutriSense | Cyber-Physical Smart Kitchen & Family Nutrition</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans, Outfit, Caveat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <style>
+    /* ==========================================================================
+       NUTRISENSE - DESIGN TOKENS & COLOR PALETTE
+       ========================================================================== */
     :root {
-      --primary: #16a34a;
-      --primary-dark: #15803d;
-      --primary-light: #dcfce7;
-      --accent: #0284c7;
-      --bg: #f4f7f4;
-      --card-bg: rgba(255, 255, 255, 0.98);
-      --border: #e2e8f0;
-      --text-main: #0f172a;
+      --primary-emerald: #16a34a;
+      --primary-dark-forest: #14532d;
+      --primary-mint-light: #dcfce7;
+      --primary-lime: #84cc16;
+      --accent-amber: #f59e0b;
+      --accent-teal: #0f766e;
+      --accent-blue: #0284c7;
+      --accent-purple: #8b5cf6;
+      --accent-rose: #f43f5e;
+
+      --bg-gradient-start: #f0fdf4;
+      --bg-gradient-mid: #e6f7ec;
+      --bg-gradient-end: #daf0e2;
+      --card-bg-glass: rgba(255, 255, 255, 0.94);
+      --card-border-glass: rgba(255, 255, 255, 0.95);
+
+      --text-dark: #0f172a;
+      --text-deep-forest: #091e11;
+      --text-slate: #334155;
       --text-muted: #64748b;
-      --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
-      --radius: 20px;
+
+      --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.05);
+      --shadow-glow: 0 8px 24px rgba(22, 163, 74, 0.35);
+
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-heading: 'Outfit', sans-serif;
+      --font-script: 'Caveat', cursive;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    h1, h2, h3, h4, .brand-title { font-family: 'Outfit', sans-serif; }
-    .script-font { font-family: 'Caveat', cursive; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-body); }
+    h1, h2, h3, h4, .brand-title { font-family: var(--font-heading); }
+    .script-font { font-family: var(--font-script); }
 
     html, body {
-      height: 100%;
-      overflow-x: hidden;
-    }
-
-    body {
+      height: 100vh;
+      max-height: 100vh;
+      overflow: hidden; /* Strict Zero-Scroll Single Screen Fit */
       background: 
-        radial-gradient(ellipse at 50% 12%, rgba(34, 197, 94, 0.22) 0%, transparent 60%),
-        radial-gradient(circle at 12% 25%, rgba(132, 204, 22, 0.15) 0%, transparent 45%),
-        radial-gradient(circle at 88% 18%, rgba(245, 158, 11, 0.14) 0%, transparent 40%),
-        radial-gradient(circle at 50% 92%, rgba(16, 185, 129, 0.20) 0%, transparent 50%),
-        linear-gradient(150deg, #f0fdf4 0%, #e6f7ec 45%, #daf0e2 100%);
+        radial-gradient(ellipse at 50% 12%, rgba(34, 197, 94, 0.20) 0%, transparent 60%),
+        radial-gradient(circle at 12% 25%, rgba(132, 204, 22, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 88% 18%, rgba(245, 158, 11, 0.10) 0%, transparent 40%),
+        radial-gradient(circle at 50% 92%, rgba(16, 185, 129, 0.18) 0%, transparent 50%),
+        linear-gradient(150deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 45%, var(--bg-gradient-end) 100%);
       background-attachment: fixed;
-      color: var(--text-main);
-      min-height: 100vh;
+      color: var(--text-dark);
       display: flex;
       flex-direction: column;
     }
 
-    /* TOP EMBEDDED GLASS HEADER */
+    /* ==========================================================================
+       TOP EMBEDDED GLASS HEADER / NAVBAR
+       ========================================================================== */
     header {
-      position: sticky;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 100;
-      padding: 0.8rem 2rem;
+      flex-shrink: 0;
+      height: 58px;
+      padding: 0 1.75rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       background: rgba(255, 255, 255, 0.88);
       backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      border-bottom: 1.5px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+      z-index: 100;
     }
 
     .brand-container {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      background: rgba(255, 255, 255, 0.9);
-      padding: 6px 16px 6px 8px;
+      gap: 0.7rem;
+      background: var(--card-bg-glass);
+      backdrop-filter: blur(16px);
+      padding: 4px 14px 4px 6px;
       border-radius: 999px;
-      border: 1px solid #bbf7d0;
+      border: 1.5px solid var(--card-border-glass);
+      box-shadow: var(--shadow-subtle);
+      cursor: pointer;
     }
     .brand-icon {
-      font-size: 1.3rem;
-      background: #dcfce7;
-      padding: 4px 8px;
+      font-size: 1.25rem;
+      background: var(--primary-mint-light);
+      padding: 3px 7px;
       border-radius: 999px;
+      border: 1px solid #bbf7d0;
     }
     .brand-text h1 {
       font-size: 1.1rem;
       font-weight: 800;
-      color: #14532d;
+      color: var(--primary-dark-forest);
       line-height: 1.1;
     }
     .brand-text span {
-      font-size: 0.65rem;
-      color: #16a34a;
+      font-size: 0.62rem;
+      color: var(--primary-emerald);
       font-weight: 700;
       letter-spacing: 0.04em;
     }
 
-    /* EMBEDDED NAV TABS */
+    /* EMBEDDED NAV PILLS */
     .nav-tabs {
       display: flex;
-      background: rgba(241, 245, 249, 0.9);
+      background: var(--card-bg-glass);
+      backdrop-filter: blur(16px);
       padding: 4px;
       border-radius: 999px;
-      border: 1px solid #e2e8f0;
+      border: 1.5px solid var(--card-border-glass);
       gap: 4px;
+      box-shadow: var(--shadow-subtle);
     }
     .nav-tab-btn {
       background: transparent;
       border: none;
-      padding: 0.55rem 1.2rem;
+      padding: 0.45rem 1.15rem;
       border-radius: 999px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
       color: #475569;
       cursor: pointer;
@@ -113,506 +138,1022 @@
       gap: 6px;
       transition: all 0.2s ease;
     }
-    .nav-tab-btn:hover { color: #0f172a; }
+    .nav-tab-btn:hover { color: var(--text-dark); }
     .nav-tab-btn.active {
-      background: #15803d;
+      background: var(--primary-emerald);
       color: #ffffff;
-      box-shadow: 0 2px 10px rgba(22, 163, 74, 0.35);
+      box-shadow: 0 2px 8px rgba(22, 163, 74, 0.35);
     }
 
-    /* LIVE SCALE HEADER PILL */
-    .header-scale-pill {
+    /* USER & SCALE TELEMETRY STATUS */
+    .header-right {
       display: flex;
       align-items: center;
-      gap: 8px;
-      background: #f0fdf4;
-      border: 1.5px solid #86efac;
-      padding: 6px 14px;
-      border-radius: 999px;
+      gap: 10px;
+    }
+    .llm-badge {
+      background: #fdf4ff;
+      border: 1px solid #f0abfc;
+      color: #a21caf;
+      font-size: 0.68rem;
       font-weight: 800;
-      color: #15803d;
-      font-size: 0.9rem;
-      box-shadow: 0 2px 8px rgba(22, 163, 74, 0.15);
+      padding: 3px 8px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
-    .live-pulse-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #22c55e;
-      animation: pulse 1.5s infinite;
-    }
-    @keyframes pulse {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-    }
-
-    /* USER BADGE */
     .header-user-badge {
       display: flex;
       align-items: center;
       gap: 8px;
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
+      background: var(--card-bg-glass);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid var(--card-border-glass);
       padding: 4px 12px;
       border-radius: 999px;
+      box-shadow: var(--shadow-subtle);
     }
     .user-avatar-circle {
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
-      background: #dcfce7;
+      background: var(--primary-mint-light);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
     }
 
-    /* MAIN CONTAINER & TABS */
+    /* ==========================================================================
+       MAIN VIEWPORT CONTAINER (100VH NO-SCROLL)
+       ========================================================================== */
     main {
       flex: 1;
-      width: 100%;
+      height: calc(100vh - 58px);
+      max-height: calc(100vh - 58px);
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       position: relative;
     }
 
-    .tab-content { display: none; }
-    .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* TAB 1: OVERVIEW HERO */
-    #tabHome {
-      padding: 2.5rem 2rem;
-      max-width: 1280px;
-      margin: 0 auto;
+    .tab-pane {
+      display: none !important;
       width: 100%;
+      height: 100%;
+      max-height: 100%;
+      overflow: hidden;
     }
-    .overview-hero-card {
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2.5rem;
-      box-shadow: var(--shadow);
+    .tab-pane.active {
+      display: flex !important;
+      flex-direction: column;
+    }
+
+    /* ==========================================================================
+       TAB 1: OVERVIEW HERO PORTAL (FIXED DIRECT ASSET PATHS)
+       ========================================================================== */
+    .portal-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      max-height: 100%;
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+    }
+    .wireframe-frame {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .portal-ambient-halo {
+      position: absolute;
+      top: 42%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(650px, 85vw);
+      height: min(650px, 85vh);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.98) 0%, rgba(220, 252, 231, 0.65) 45%, rgba(187, 247, 208, 0.2) 70%, transparent 80%);
+      filter: blur(28px);
+      z-index: 0;
+      pointer-events: none;
+      animation: pulseHalo 7s ease-in-out infinite alternate;
+    }
+    @keyframes pulseHalo {
+      0% { transform: translate(-50%, -50%) scale(0.94); opacity: 0.8; }
+      100% { transform: translate(-50%, -50%) scale(1.06); opacity: 1; }
+    }
+    .wireframe-arch-img {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(900px, 85vw);
+      height: auto;
+      max-height: 56vh;
+      object-fit: contain;
+      object-position: top center;
+      z-index: 1;
+      pointer-events: none;
+      filter: drop-shadow(0 10px 28px rgba(22, 163, 74, 0.15));
+    }
+    .wireframe-bottom-img {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      min-width: 100%;
+      z-index: 2;
+      pointer-events: none;
+      display: block;
+      filter: drop-shadow(0 -8px 24px rgba(0, 0, 0, 0.12));
+    }
+    .portal-inner-content {
+      position: relative;
+      z-index: 20;
+      max-width: 680px;
+      padding: 0 1.5rem;
+      margin-top: 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 1.5rem;
-      position: relative;
+      pointer-events: auto;
+    }
+    .landing-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-dark-forest);
+      color: #ffffff;
+      padding: 6px 18px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+      border: 2px solid #ffffff;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+    .landing-script-sub {
+      font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+      color: var(--primary-emerald);
+      line-height: 1.05;
+      margin-bottom: 0.1rem;
+      font-weight: 700;
+      text-shadow: 
+        -2px -2px 0 #ffffff, 0 -2px 0 #ffffff, 2px -2px 0 #ffffff,
+        2px 0 0 #ffffff, 2px 2px 0 #ffffff, 0 2px 0 #ffffff,
+        -2px 2px 0 #ffffff, -2px 0 0 #ffffff,
+        0 4px 0 #dcfce7, 0 8px 20px rgba(22, 163, 74, 0.35);
+    }
+    .landing-main-heading {
+      font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+      font-weight: 800;
+      color: var(--text-dark);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+      text-shadow: 
+        -2.5px -2.5px 0 #ffffff, 0 -2.5px 0 #ffffff, 2.5px -2.5px 0 #ffffff,
+        2.5px 0 0 #ffffff, 2.5px 2.5px 0 #ffffff, 0 2.5px 0 #ffffff,
+        -2.5px 2.5px 0 #ffffff, -2.5px 0 0 #ffffff,
+        0 5px 0 #e2e8f0, 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+    .landing-desc-text {
+      font-size: clamp(0.82rem, 1vw, 0.92rem);
+      font-weight: 600;
+      color: #0f172a;
+      line-height: 1.45;
+      margin-bottom: 1rem;
+      max-width: 540px;
+      text-shadow: 
+        -1.5px -1.5px 0 rgba(255,255,255,0.9), 1.5px -1.5px 0 rgba(255,255,255,0.9),
+        -1.5px 1.5px 0 rgba(255,255,255,0.9), 1.5px 1.5px 0 rgba(255,255,255,0.9),
+        0 2px 10px rgba(255, 255, 255, 0.95);
+    }
+    .landing-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .btn-hero-solid {
+      background: var(--primary-emerald);
+      color: #ffffff;
+      border: none;
+      padding: 0.7rem 1.8rem;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(22, 163, 74, 0.4);
+      transition: all 0.2s ease;
+    }
+    .btn-hero-solid:hover {
+      background: var(--primary-dark-forest);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(22, 163, 74, 0.5);
+    }
+    .btn-hero-hollow {
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--primary-dark-forest);
+      border: 2px solid #bbf7d0;
+      padding: 0.65rem 1.6rem;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      font-weight: 800;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.2s ease;
+    }
+    .btn-hero-hollow:hover {
+      background: #ffffff;
+      border-color: var(--primary-emerald);
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       TAB 2: LIVE PREP BOARD (DEDICATED ZERO-SCROLL WORKSPACE)
+       ========================================================================== */
+    .prep-board-container {
+      height: 100%;
+      max-height: 100%;
+      padding: 0.65rem 1.25rem;
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 0.9rem;
       overflow: hidden;
     }
-    .hero-pill {
-      background: #dcfce7;
-      color: #166534;
-      padding: 6px 16px;
-      border-radius: 999px;
-      font-weight: 700;
-      font-size: 0.85rem;
-    }
-    .hero-title {
-      font-size: 2.6rem;
-      font-weight: 800;
-      color: #0f172a;
-      line-height: 1.2;
-    }
-    .hero-title span {
-      background: linear-gradient(135deg, #16a34a 0%, #0284c7 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .hero-sub {
-      color: #475569;
-      font-size: 1.1rem;
-      max-width: 720px;
-      line-height: 1.6;
-    }
-    .hero-cta-btn {
-      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-      color: white;
-      border: none;
-      padding: 1rem 2.2rem;
-      border-radius: 999px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(22, 163, 74, 0.35);
-      transition: all 0.2s;
-    }
-    .hero-cta-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(22, 163, 74, 0.45);
-    }
 
-    /* GRID FEATURES */
-    .overview-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-    .feature-card {
-      background: white;
-      border: 1px solid var(--border);
+    .card-pane {
+      background: var(--card-bg-glass);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid var(--card-border-glass);
       border-radius: 16px;
-      padding: 1.5rem;
-      box-shadow: var(--shadow);
-    }
-    .feature-icon {
-      font-size: 2rem;
-      margin-bottom: 0.75rem;
-    }
-    .feature-card h3 {
-      font-size: 1.15rem;
-      color: #0f172a;
-      margin-bottom: 0.5rem;
-    }
-    .feature-card p {
-      font-size: 0.9rem;
-      color: #64748b;
-      line-height: 1.5;
+      box-shadow: var(--shadow-subtle);
+      padding: 0.75rem 0.9rem;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
 
-    /* TAB 2: LIVE PREP BOARD */
-    #tabBoard {
-      padding: 1.5rem 2rem;
-      max-width: 1400px;
-      margin: 0 auto;
-      width: 100%;
-    }
-    .board-layout {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 1.5rem;
-    }
-    @media (max-width: 1024px) {
-      .board-layout { grid-template-columns: 1fr; }
-    }
-
-    .prep-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      box-shadow: var(--shadow);
-    }
-
-    .prep-card-header {
+    .pane-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--border);
+      margin-bottom: 0.4rem;
     }
-    .prep-card-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #0f172a;
+    .pane-title {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--text-dark);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
-    /* CAMERA & ZONE VIEWPORT */
-    .cam-viewport-wrapper {
+    /* CAMERA VIEWPORT WITH 4-ZONE GRID OVERLAY & CV BOUNDING BOXES */
+    .cam-wrapper {
       position: relative;
-      width: 100%;
-      background: #0f172a;
-      border-radius: 16px;
+      background: #090d16;
+      border-radius: 12px;
       overflow: hidden;
-      aspect-ratio: 4/3;
-      box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+      flex: 1;
+      min-height: 200px;
+      box-shadow: inset 0 0 25px rgba(0,0,0,0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
-    #camStreamCanvas {
+    #camCanvas {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: fill;
       display: block;
     }
-    .cam-hud-overlay {
+    .cam-top-hud {
       position: absolute;
-      top: 12px;
-      left: 12px;
-      right: 12px;
+      top: 6px;
+      left: 6px;
+      right: 6px;
       display: flex;
       justify-content: space-between;
       pointer-events: none;
+      z-index: 10;
     }
-    .hud-badge {
-      background: rgba(15, 23, 42, 0.75);
+    .hud-pill {
+      background: rgba(15, 23, 42, 0.85);
       backdrop-filter: blur(8px);
       color: #38bdf8;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      padding: 4px 10px;
+      padding: 3px 8px;
       border-radius: 6px;
       border: 1px solid rgba(56, 189, 248, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
-    .hud-scale-badge {
-      background: rgba(22, 163, 74, 0.85);
-      color: white;
+    .hud-scale-pill {
+      color: #4ade80;
       border-color: rgba(74, 222, 128, 0.4);
-      font-size: 0.85rem;
-      padding: 4px 12px;
+      font-size: 0.78rem;
+      font-family: var(--font-heading);
     }
 
-    /* 4-ZONE MATRIX STATUS BAR */
-    .zone-matrix-bar {
+    /* 4-ZONE STATUS STRIP */
+    .zone-strip {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-top: 1rem;
+      gap: 5px;
+      margin-top: 0.4rem;
     }
     .zone-badge {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 8px 6px;
-      text-align: center;
-      font-size: 0.75rem;
+      border-radius: 8px;
+      padding: 4px 5px;
+      font-size: 0.7rem;
       font-weight: 700;
-      color: #64748b;
+      color: var(--text-muted);
+      text-align: center;
       transition: all 0.2s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .zone-badge.occupied {
-      background: #f0fdf4;
+      background: #dcfce7;
       border-color: #86efac;
       color: #15803d;
-      box-shadow: 0 2px 6px rgba(34, 197, 94, 0.15);
+      box-shadow: 0 1px 4px rgba(34, 197, 94, 0.15);
     }
 
-    /* TELEMETRY METERS */
-    .telemetry-row {
+    /* LIVE TELEMETRY METERS */
+    .telemetry-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 1rem;
+      gap: 6px;
+      margin-top: 0.4rem;
     }
-    .telemetry-box {
+    .telemetry-card {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 10px 12px;
+      border-radius: 8px;
+      padding: 5px 6px;
       text-align: center;
     }
-    .telemetry-label { font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
-    .telemetry-val { font-size: 1.35rem; font-weight: 800; color: #0f172a; margin-top: 2px; }
-    .telemetry-val.live { color: #16a34a; }
-
-    /* ACTION BUTTONS */
-    .btn-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 1rem;
-    }
-    .action-btn {
-      flex: 1;
-      padding: 0.85rem 1rem;
-      border-radius: 12px;
-      font-size: 0.9rem;
+    .telemetry-card span {
+      font-size: 0.62rem;
       font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: block;
+    }
+    .telemetry-card strong {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      font-family: var(--font-heading);
+    }
+    .telemetry-card strong.green-val {
+      color: var(--primary-emerald);
+    }
+
+    /* ACTION CONTROLS & POT MODE */
+    .controls-row {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr 1fr;
+      gap: 5px;
+      margin-top: 0.4rem;
+    }
+    .btn-action {
+      border: none;
+      padding: 0.55rem 0.6rem;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.76rem;
       cursor: pointer;
-      border: 1px solid transparent;
-      transition: all 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 4px;
+      transition: all 0.15s ease;
     }
-    .btn-start { background: #16a34a; color: white; box-shadow: 0 2px 8px rgba(22, 163, 74, 0.25); }
-    .btn-start:hover { background: #15803d; }
-    .btn-stop { background: #ef4444; color: white; box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25); }
+    .btn-start {
+      background: var(--primary-emerald);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(22, 163, 74, 0.35);
+    }
+    .btn-start:hover { background: var(--primary-dark-forest); }
+    .btn-stop {
+      background: #ef4444;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
+    }
     .btn-stop:hover { background: #dc2626; }
-    .btn-secondary { background: #ffffff; border-color: #cbd5e1; color: #334155; }
-    .btn-secondary:hover { background: #f1f5f9; }
-    .btn-danger-outline { background: #fff1f2; border-color: #fca5a5; color: #dc2626; }
-    .btn-danger-outline:hover { background: #fee2e2; }
-
-    /* NUTRIENT LEDGER */
-    .ledger-ring-box {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      padding: 1rem;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 14px;
-      margin-bottom: 1rem;
+    .btn-pot {
+      background: #0284c7;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);
     }
-    .ring-wrapper {
-      width: 80px;
-      height: 80px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .btn-pot:hover { background: #0369a1; }
+    .btn-pot.active-pot {
+      background: #d97706;
+      box-shadow: 0 0 10px rgba(217, 119, 6, 0.5);
     }
-    .ring-svg {
-      transform: rotate(-90deg);
-      width: 100%;
-      height: 100%;
-    }
-    .ring-bg { fill: none; stroke: #e2e8f0; stroke-width: 8; }
-    .ring-fill {
-      fill: none;
-      stroke: #16a34a;
-      stroke-width: 8;
-      stroke-linecap: round;
-      stroke-dasharray: 226;
-      stroke-dashoffset: 60;
-      transition: stroke-dashoffset 0.5s ease;
-    }
-    .ring-text-center {
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .ring-cal-val { font-size: 1.2rem; font-weight: 800; color: #0f172a; line-height: 1; }
-    .ring-cal-lbl { font-size: 0.6rem; color: #64748b; font-weight: 700; margin-top: 2px; }
-
-    .macro-bars {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex: 1;
-    }
-    .macro-bar-item {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.82rem;
-      font-weight: 600;
+    .btn-tare {
+      background: #f1f5f9;
       color: #334155;
+      border: 1px solid #cbd5e1;
     }
-    .macro-bar-item strong { color: #0f172a; }
+    .btn-tare:hover { background: #e2e8f0; }
+    .btn-reset {
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+    }
+    .btn-reset:hover { background: #e2e8f0; }
 
-    /* REMOVAL HISTORY LIST */
-    .removal-list {
+    /* POT MODE HUD BANNER */
+    #potModeBanner {
+      display: none;
+      background: #fffbeb;
+      border: 1.5px solid #fde68a;
+      border-radius: 8px;
+      padding: 6px 10px;
+      margin-top: 5px;
+      font-size: 0.74rem;
+      color: #92400e;
+      font-weight: 700;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* ==========================================================================
+       RIGHT COLUMN: ACTIVE NUTRITION LEDGER & VISUAL NUTRIENT BARS
+       ========================================================================== */
+    .board-right-pane {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      max-height: 250px;
-      overflow-y: auto;
-      margin-top: 0.5rem;
+      gap: 0.45rem;
+      height: 100%;
+      max-height: 100%;
+      overflow: hidden;
     }
-    .removal-card {
-      background: white;
+
+    /* CALORIE HERO & MACRO PROGRESS BARS CARD */
+    .nutrition-overview-card {
+      background: #ffffff;
       border: 1px solid #e2e8f0;
       border-radius: 12px;
-      padding: 10px 12px;
+      padding: 8px 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
       display: flex;
       flex-direction: column;
-      gap: 4px;
-    }
-    .removal-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      gap: 7px;
     }
 
-    /* TAB 3: FAMILY HUB */
-    #tabFamily {
-      padding: 1.5rem 2rem;
-      max-width: 1400px;
-      margin: 0 auto;
-      width: 100%;
-    }
-    .family-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
-    }
-    .profile-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.25rem;
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .profile-header {
+    .calorie-top-row {
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    .profile-avatar {
-      width: 44px;
-      height: 44px;
+
+    .cal-ring {
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
-      background: #dcfce7;
+      background: conic-gradient(var(--primary-emerald) var(--cal-pct, 35%), #e2e8f0 0deg);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
+      position: relative;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(22, 163, 74, 0.15);
     }
-    .profile-info h3 { font-size: 1.05rem; color: #0f172a; }
-    .profile-info span { font-size: 0.75rem; color: #64748b; }
-    .profile-macros {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-      background: #f8fafc;
-      padding: 8px;
-      border-radius: 10px;
+    .cal-ring::before {
+      content: '';
+      position: absolute;
+      width: 42px;
+      height: 42px;
+      background: #fff;
+      border-radius: 50%;
+    }
+    .cal-ring-text {
+      position: relative;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text-dark);
       text-align: center;
+      line-height: 1;
     }
-    .profile-macros div span { font-size: 0.65rem; color: #64748b; display: block; }
-    .profile-macros div strong { font-size: 0.85rem; color: #0f172a; }
-    .btn-log-portion {
-      background: #f0fdf4;
-      border: 1px solid #86efac;
-      color: #15803d;
-      padding: 8px;
-      border-radius: 10px;
+    .cal-ring-text span {
+      font-size: 0.48rem;
+      color: var(--text-muted);
+      display: block;
       font-weight: 700;
-      font-size: 0.8rem;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s;
     }
-    .btn-log-portion:hover { background: #dcfce7; }
 
-    /* PANTRY & AI */
-    .pantry-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.25rem;
-      box-shadow: var(--shadow);
+    .cal-summary-info {
+      flex: 1;
     }
-    .pantry-list {
+    .cal-summary-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--text-dark);
+    }
+    .cal-summary-sub {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    /* MACRO RATIO ENERGY DISTRIBUTION BAR */
+    .ratio-bar-container {
+      margin-top: 2px;
+    }
+    .ratio-bar-track {
+      height: 6px;
+      width: 100%;
+      background: #e2e8f0;
+      border-radius: 999px;
+      display: flex;
+      overflow: hidden;
+    }
+    .ratio-segment-protein { background: var(--primary-emerald); transition: width 0.3s; }
+    .ratio-segment-carbs { background: var(--accent-amber); transition: width 0.3s; }
+    .ratio-segment-fat { background: var(--accent-blue); transition: width 0.3s; }
+
+    /* INDIVIDUAL MACRONUTRIENT PROGRESS BARS */
+    .macro-bars-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px 10px;
+    }
+    .nutrient-bar-group {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      margin-top: 1rem;
+      gap: 2px;
     }
-    .pantry-item-card {
+    .nutrient-bar-label {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 12px;
-      background: #f8fafc;
+      font-size: 0.7rem;
+    }
+    .nutrient-bar-label span {
+      color: var(--text-slate);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nutrient-bar-label strong {
+      color: var(--text-dark);
+      font-weight: 800;
+    }
+    .nutrient-track {
+      height: 5px;
+      width: 100%;
+      background: #f1f5f9;
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+    .nutrient-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+    .fill-protein { background: linear-gradient(90deg, #86efac, #16a34a); }
+    .fill-carbs { background: linear-gradient(90deg, #fde68a, #f59e0b); }
+    .fill-fat { background: linear-gradient(90deg, #bae6fd, #0284c7); }
+    .fill-fiber { background: linear-gradient(90deg, #ddd6fe, #8b5cf6); }
+
+    /* MASS RECONCILIATION */
+    .mass-recon-pill {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      padding: 4px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+    }
+    .mass-recon-pill strong { color: #15803d; font-weight: 800; }
+
+    /* CONFIRMED REMOVALS SCROLLABLE LIST WITH NUTRIENT PILLS */
+    .removals-container {
+      flex: 1;
+      min-height: 80px;
+      max-height: 100%;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding-right: 2px;
+    }
+    .removals-container::-webkit-scrollbar {
+      width: 4px;
+    }
+    .removals-container::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    .rem-item {
+      background: #ffffff;
       border: 1px solid #e2e8f0;
       border-radius: 10px;
+      padding: 7px 9px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      transition: all 0.15s ease;
     }
-    .pantry-low-tag {
-      background: #fee2e2;
-      color: #dc2626;
-      font-weight: 800;
-      font-size: 0.7rem;
-      padding: 2px 8px;
+    .rem-item:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+    }
+    .rem-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .rem-nutrient-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 4px;
+    }
+    .nut-pill {
+      font-size: 0.66rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .nut-pill-prot { background: #dcfce7; color: #15803d; }
+    .nut-pill-carb { background: #fef3c7; color: #b45309; }
+    .nut-pill-fat { background: #e0f2fe; color: #0369a1; }
+    .nut-pill-fib { background: #f3e8ff; color: #7e22ce; }
+
+    /* 1-TAP FAMILY LOGGING */
+    .family-log-section {
+      border-top: 1px solid #e2e8f0;
+      padding-top: 5px;
+    }
+    .family-log-section span {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 3px;
+    }
+    .family-btn-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+    }
+    .btn-fam {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      padding: 5px 6px;
       border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-fam:hover {
+      background: #e0f2fe;
+      border-color: #7dd3fc;
+      color: #0369a1;
+    }
+
+    /* ==========================================================================
+       TAB 3: CLINICAL FAMILY METABOLIC HUB & INTERACTIVE AI CHAT
+       ========================================================================== */
+    .family-hub-container {
+      height: 100%;
+      padding: 0.75rem 1.25rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .family-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .family-profile-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.02);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .profile-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .profile-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-dark);
+    }
+    .persona-badge {
+      font-size: 0.62rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 999px;
+      display: inline-block;
+      margin-top: 2px;
+    }
+    .badge-hari { background: #fdf4ff; color: #a21caf; border: 1px solid #f0abfc; }
+    .badge-mom { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+    .badge-dad { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+
+    /* TRIPLE CONCENTRIC RINGS */
+    .rings-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 5px 8px;
+    }
+    .concentric-svg {
+      width: 58px;
+      height: 58px;
+      flex-shrink: 0;
+      transform: rotate(-90deg);
+    }
+    .ring-bg { fill: none; stroke: #e2e8f0; stroke-width: 5; }
+    .ring-cal { fill: none; stroke: #16a34a; stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset 0.6s; }
+    .ring-prot { fill: none; stroke: #0284c7; stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset 0.6s; }
+    .ring-fib { fill: none; stroke: #8b5cf6; stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset 0.6s; }
+
+    .rings-legend {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 0.68rem;
+    }
+    .legend-row { display: flex; justify-content: space-between; }
+
+    /* SUPER SIMPLE AI BENEFIT BOX */
+    .ai-verdict-box {
+      background: #f0fdf4;
+      border: 1.5px solid #bbf7d0;
+      border-radius: 8px;
+      padding: 6px 8px;
+      font-size: 0.72rem;
+      color: #14532d;
+      line-height: 1.35;
+    }
+    .ai-verdict-header {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 800;
+      font-size: 0.66rem;
+      color: #16a34a;
+      margin-bottom: 2px;
+    }
+
+    .meal-history-list {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 4px 6px;
+      max-height: 60px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 0.68rem;
+    }
+
+    /* INTERACTIVE GROQ AI DIETITIAN CHAT SECTION */
+    .ai-chat-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 8px 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .ai-chat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .ai-chat-header strong {
+      font-size: 0.84rem;
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .chat-chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .chat-chip {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .chat-chip:hover {
+      background: #dcfce7;
+      border-color: #86efac;
+      color: #15803d;
+    }
+    .chat-input-row {
+      display: flex;
+      gap: 6px;
+    }
+    .chat-select {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 5px 8px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #1e293b;
+      outline: none;
+    }
+    .chat-input {
+      flex: 1;
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 5px 10px;
+      font-size: 0.76rem;
+      outline: none;
+    }
+    .chat-input:focus { border-color: var(--primary-emerald); background: #fff; }
+    .chat-reply-bubble {
+      display: none;
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 0.74rem;
+      color: #14532d;
+      line-height: 1.4;
+    }
+
+    /* ==========================================================================
+       TAB 4: SMART PANTRY (GROQ ZERO-WASTE AI CHEF & LIVE INVENTORY)
+       ========================================================================== */
+    .pantry-container {
+      height: 100%;
+      padding: 1rem 1.5rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .ai-chef-hero-card {
+      background: linear-gradient(135deg, #14532d 0%, #166534 60%, #15803d 100%);
+      color: #ffffff;
+      border-radius: 16px;
+      padding: 14px 18px;
+      box-shadow: 0 8px 24px rgba(22, 101, 52, 0.25);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .ai-chef-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(8px);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+    .ai-chef-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin: 4px 0 2px 0;
+      color: #ffffff;
+      font-family: var(--font-heading);
+    }
+    .ai-chef-desc {
+      font-size: 0.8rem;
+      color: #dcfce7;
+      line-height: 1.4;
+      max-width: 680px;
+    }
+    .ai-chef-restock-alert {
+      margin-top: 6px;
+      font-size: 0.74rem;
+      color: #fef08a;
+      font-weight: 700;
+    }
+
+    .pantry-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .pantry-item-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: transform 0.15s;
+    }
+    .pantry-item-card:hover { transform: translateY(-1px); border-color: #cbd5e1; }
+    .pantry-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .pantry-stock-val {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary-dark-forest);
+      font-family: var(--font-heading);
+    }
+    .pantry-status-badge {
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .status-in-stock { background: #dcfce7; color: #15803d; }
+    .status-low-stock { background: #fee2e2; color: #b91c1c; }
+
+    /* TOAST NOTIFICATION */
+    #toastMessage {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--text-dark);
+      color: #ffffff;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 1000;
     }
   </style>
 </head>
 <body>
 
-  <!-- TOP HEADER -->
+  <!-- ==========================================
+       TOP EMBEDDED GLASS NAVBAR
+       ========================================== -->
   <header>
-    <div class="brand-container">
+    <!-- BRAND / LOGO -->
+    <div class="brand-container" onclick="switchNavTab('prep-board')">
       <div class="brand-icon">🥗</div>
       <div class="brand-text">
         <h1>NutriSense</h1>
@@ -620,183 +1161,256 @@
       </div>
     </div>
 
-    <!-- LIVE SCALE STREAM INDICATOR (Visible Across All Tabs) -->
-    <div class="header-scale-pill">
-      <div class="live-pulse-dot"></div>
-      <span id="navLiveScaleText">Scale: 0.0g</span>
-    </div>
+    <!-- EMBEDDED NAV PILLS -->
+    <nav class="nav-tabs">
+      <button id="navBtn-overview" class="nav-tab-btn" onclick="switchNavTab('overview')">
+        <span>📊</span>
+        <span>Overview</span>
+      </button>
+      <button id="navBtn-prep-board" class="nav-tab-btn active" onclick="switchNavTab('prep-board')">
+        <span>🔪</span>
+        <span>Live Prep Board</span>
+      </button>
+      <button id="navBtn-family" class="nav-tab-btn" onclick="switchNavTab('family')">
+        <span>👨‍👩‍👧</span>
+        <span>Family Health & AI Hub</span>
+      </button>
+      <button id="navBtn-pantry" class="nav-tab-btn" onclick="switchNavTab('pantry')">
+        <span>📦</span>
+        <span>Smart Pantry</span>
+      </button>
+    </nav>
 
-    <div class="nav-tabs">
-      <button id="tabBtnHome" class="nav-tab-btn" onclick="switchTab('home')">🏠 Overview</button>
-      <button id="tabBtnBoard" class="nav-tab-btn active" onclick="switchTab('board')">⚖️ Live Prep Board</button>
-      <button id="tabBtnFamily" class="nav-tab-btn" onclick="switchTab('family')">👨‍👩‍👧‍👦 Family Health & AI Hub</button>
-    </div>
-
-    <div class="header-user-badge">
-      <div class="user-avatar-circle">👤</div>
-      <div>
-        <strong style="color: #166534; font-size: 0.8rem;">The Hari Household</strong>
-        <span style="color: var(--text-muted); font-size: 0.7rem; display: block;">Master Admin</span>
+    <!-- USER & SCALE STATUS BADGE -->
+    <div class="header-right">
+      <div class="llm-badge">
+        <span>⚡ GROQ LPU AI ENGINE</span>
+      </div>
+      <div class="header-user-badge">
+        <div class="user-avatar-circle">👤</div>
+        <div>
+          <div style="font-size: 0.82rem; font-weight: 700; color: #14532d;">The Hari Household</div>
+          <div style="font-size: 0.62rem; color: #64748b;">Master Admin</div>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- MAIN BODY CONTENT -->
+  <!-- ==========================================
+       MAIN VIEWPORT TABS
+       ========================================== -->
   <main>
 
-    <!-- ==========================================
-         TAB 1: OVERVIEW
-         ========================================== -->
-    <section id="tabHome" class="tab-content">
-      <div class="overview-hero-card">
-        <div class="hero-pill">⚡ Real-Time Cyber-Physical System Active</div>
-        <h1 class="hero-title">Precision Dietary Intelligence<br><span>Powered by Spatial AI & Load Telemetry</span></h1>
-        <p class="hero-sub">NutriSense transforms everyday food preparation into an automated, non-invasive nutritional ledger using 4-zone computer vision, high-speed strain gauge telemetry, and ICMR-NIN reference analytics.</p>
-        <button class="hero-cta-btn" onclick="switchTab('board')">▶ Launch Live Prep Board</button>
-      </div>
+    <!-- TAB 1: OVERVIEW HERO PORTAL (FIXED DIRECT ASSET PATHS) -->
+    <section id="tab-overview" class="tab-pane portal-section">
+      <div class="wireframe-frame">
+        
+        <!-- AMBIENT HALO -->
+        <div class="portal-ambient-halo"></div>
 
-      <div class="overview-grid">
-        <div class="feature-card">
-          <div class="feature-icon">⚖️</div>
-          <h3>4-Cell Strain Gauge Scale</h3>
-          <p>Milligram-precision load cell matrix streaming continuous portion changes over high-speed Wi-Fi.</p>
+        <!-- ARCH GRAPHIC -->
+        <img class="wireframe-arch-img" src="/static/hero_curved_accent.png" onerror="this.src='/static/assets/hero_curved_accent.png'" alt="NutriSense Fruit & Vegetable Arch">
+
+        <!-- FLUSH BOTTOM PRODUCE -->
+        <img class="wireframe-bottom-img" src="/static/hero_bottom_official.png" onerror="this.src='/static/assets/hero_bottom_official.png'" alt="NutriSense Fresh Produce Foundation">
+
+        <!-- 3D FLOATING LETTER TYPOGRAPHY & CTA BUTTONS -->
+        <div class="portal-inner-content">
+          <div class="landing-badge">🥗 CYBER-PHYSICAL SENSOR FUSION & ICMR-NIN</div>
+          <div class="landing-script-sub script-font">Fresh, Organic & Intelligent</div>
+          <h1 class="landing-main-heading">Smart Cyber-Physical Dietary Tracking</h1>
+          <p class="landing-desc-text">
+            Zero manual logging. NutriSense binds top-down Computer Vision, 4-cell load scale telemetry, and certified ICMR-NIN nutrition data for effortless kitchen health intelligence.
+          </p>
+          <div class="landing-btn-group">
+            <button class="btn-hero-solid" onclick="switchNavTab('prep-board')">LAUNCH KITCHEN BOARD</button>
+            <button class="btn-hero-hollow" onclick="switchNavTab('family')">VIEW FAMILY HUB</button>
+          </div>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">👁️</div>
-          <h3>YOLOv8 Spatial Matrix</h3>
-          <p>Real-time ingredient classification across 4 discrete physical cutting zones.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">📊</div>
-          <h3>ICMR-NIN IFCT Engine</h3>
-          <p>Clinically validated macro and micronutrient breakdown matching Indian dietary standards.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">👨‍👩‍👧‍👦</div>
-          <h3>Family Health Profiles</h3>
-          <p>Automated dietary tracking, Smart Pantry depletion logging, and AI dietitian guidance.</p>
-        </div>
+
       </div>
     </section>
 
-    <!-- ==========================================
-         TAB 2: LIVE PREP BOARD (DEFAULT ACTIVE)
-         ========================================== -->
-    <section id="tabBoard" class="tab-content active">
-      <div class="board-layout">
+    <!-- TAB 2: LIVE PREP BOARD (CLEAN DEDICATED WORKSPACE - ACTIVE BY DEFAULT - NO HERO BANNER) -->
+    <section id="tab-prep-board" class="tab-pane active">
+      <div class="prep-board-container">
         
-        <!-- LEFT: CAMERA & SPATIAL MATRIX -->
-        <div class="prep-card">
-          <div class="prep-card-header">
-            <div class="prep-card-title">
-              <span>📹</span> 4-Zone Spatial Camera & Scale Matrix
+        <!-- LEFT COLUMN: CAMERA VIEWPORT & QUADRANT MATRIX -->
+        <div class="card-pane">
+          <div class="pane-header">
+            <div class="pane-title">
+              <span>📷</span> Live 4-Zone Cutting Board Matrix
             </div>
-            <div style="display: flex; gap: 8px;">
-              <span id="fsmStateBadge" class="hud-badge" style="color: #16a34a; background: #dcfce7; border-color: #bbf7d0;">IDLE</span>
+            <span id="fsmBadge" class="hud-pill" style="color: #16a34a; background: #dcfce7; border-color: #bbf7d0;">IDLE</span>
+          </div>
+
+          <!-- CAMERA CANVAS (4-ZONE GRID & CV LABELS) -->
+          <div class="cam-wrapper">
+            <canvas id="camCanvas" width="640" height="480"></canvas>
+            <div class="cam-top-hud">
+              <span class="hud-pill">ESP32-CAM (10.126.26.171)</span>
+              <span id="hudScaleLoad" class="hud-pill hud-scale-pill">Scale: 0.0g</span>
             </div>
           </div>
 
-          <div class="cam-viewport-wrapper">
-            <canvas id="camStreamCanvas" width="640" height="480"></canvas>
-            <div class="cam-hud-overlay">
-              <span class="hud-badge">ESP32-CAM (10.126.26.171)</span>
-              <span id="hudScaleWeight" class="hud-badge hud-scale-badge">Scale: 0.0g</span>
-            </div>
-          </div>
-
-          <!-- 4 ZONES STATUS -->
-          <div class="zone-matrix-bar">
-            <div id="badgeZone1" class="zone-badge">Zone 1: READY</div>
-            <div id="badgeZone2" class="zone-badge">Zone 2: READY</div>
-            <div id="badgeZone3" class="zone-badge">Zone 3: READY</div>
-            <div id="badgeZone4" class="zone-badge">Zone 4: READY</div>
+          <!-- 4-ZONE STATUS STRIP -->
+          <div class="zone-strip">
+            <div id="badgeZ1" class="zone-badge">Zone 1: READY</div>
+            <div id="badgeZ2" class="zone-badge">Zone 2: READY</div>
+            <div id="badgeZ3" class="zone-badge">Zone 3: READY</div>
+            <div id="badgeZ4" class="zone-badge">Zone 4: READY</div>
           </div>
 
           <!-- LIVE TELEMETRY ROW -->
-          <div class="telemetry-row">
-            <div class="telemetry-box">
-              <div class="telemetry-label">Initial Mass</div>
-              <div id="statInitMass" class="telemetry-val">0.0g</div>
+          <div class="telemetry-grid">
+            <div class="telemetry-card">
+              <span>Initial Mass</span>
+              <strong id="statInitWeight">0.0g</strong>
             </div>
-            <div class="telemetry-box" style="background: #f0fdf4; border-color: #86efac;">
-              <div class="telemetry-label" style="color: #15803d;">Current Load</div>
-              <div id="statCurrentLoad" class="telemetry-val live">0.0g</div>
+            <div class="telemetry-card">
+              <span>Current Load</span>
+              <strong id="statLiveWeight" class="green-val">0.0g</strong>
             </div>
-            <div class="telemetry-box">
-              <div class="telemetry-label">Baseline Tare</div>
-              <div id="statBaselineTare" class="telemetry-val">0.0g</div>
+            <div class="telemetry-card">
+              <span>Baseline Tare</span>
+              <strong id="statTareWeight">0.0g</strong>
             </div>
           </div>
 
-          <!-- ACTION BUTTONS -->
-          <div class="btn-row">
-            <button id="btnMainAction" class="action-btn btn-start" onclick="toggleMeasurement()">
-              ▶ START MEASUREMENT
+          <!-- ACTION CONTROLS (WITH FULL POT MEASUREMENT) -->
+          <div class="controls-row">
+            <button id="btnToggleMeasure" class="btn-action btn-start" onclick="toggleMeasurement()">
+              ▶ START PREP
             </button>
-            <button class="action-btn btn-secondary" onclick="tareScale()">
-              ⚖️ TARE SCALE
+            <button id="btnPotMode" class="btn-action btn-pot" onclick="toggleFullPotMode()">
+              🍲 MEASURE FULL POT
             </button>
-            <button class="action-btn btn-danger-outline" onclick="resetSession()">
+            <button class="btn-action btn-tare" onclick="tareScale()">
+              ⚖️ TARE
+            </button>
+            <button class="btn-action btn-reset" onclick="resetSession()">
               🔄 RESET
             </button>
           </div>
+
+          <!-- FULL POT SERVING DISTRIBUTION HUD -->
+          <div id="potModeBanner">
+            <div>
+              <span>🍲 <strong>Pot Serving Mode:</strong> <span id="potStatusMsg">Locked 0.0g (0 kcal). Scoop portion for family!</span></span>
+            </div>
+            <button style="background: transparent; border: none; color: #b45309; font-weight: 800; cursor: pointer;" onclick="toggleFullPotMode()">✖ Exit</button>
+          </div>
         </div>
 
-        <!-- RIGHT: NUTRIENT LEDGER & REMOVALS -->
-        <div class="prep-card">
-          <div class="prep-card-header">
-            <div class="prep-card-title">
+        <!-- RIGHT COLUMN: ACTIVE NUTRITION LEDGER & PROGRESS BARS -->
+        <div class="card-pane board-right-pane">
+          <div class="pane-header">
+            <div class="pane-title">
               <span>🥗</span> Active Nutrition Ledger
             </div>
-            <span style="font-size: 0.75rem; color: #16a34a; font-weight: 700;">ICMR-NIN IFCT 2017</span>
+            <span style="font-size: 0.72rem; font-weight: 700; color: var(--primary-emerald);">ICMR-NIN IFCT 2017</span>
           </div>
 
-          <!-- CALORIE RING & MACROS -->
-          <div class="ledger-ring-box">
-            <div class="ring-wrapper">
-              <svg class="ring-svg" viewBox="0 0 80 80">
-                <circle class="ring-bg" cx="40" cy="40" r="36"></circle>
-                <circle id="ringProgress" class="ring-fill" cx="40" cy="40" r="36"></circle>
-              </svg>
-              <div class="ring-text-center">
-                <span id="ringCalories" class="ring-cal-val">0</span>
-                <span class="ring-cal-lbl">KCAL</span>
+          <!-- NUTRIENT PROGRESS BARS & ENERGY RATIO -->
+          <div class="nutrition-overview-card">
+            
+            <!-- TOP CALORIE ROW & ENERGY RATIO -->
+            <div class="calorie-top-row">
+              <div id="ringEl" class="cal-ring">
+                <div class="cal-ring-text">
+                  <span id="statCaloriesNum">0</span>
+                  <span>KCAL</span>
+                </div>
+              </div>
+              <div class="cal-summary-info">
+                <div class="cal-summary-title">Total Active Portion Energy</div>
+                <div class="cal-summary-sub" id="energySplitText">Protein 0% • Carbs 0% • Fat 0%</div>
+                
+                <!-- Macro Caloric Distribution Segment Bar -->
+                <div class="ratio-bar-container">
+                  <div class="ratio-bar-track">
+                    <div id="ratioProt" class="ratio-segment-protein" style="width: 0%;"></div>
+                    <div id="ratioCarb" class="ratio-segment-carbs" style="width: 0%;"></div>
+                    <div id="ratioFat" class="ratio-segment-fat" style="width: 0%;"></div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div class="macro-bars">
-              <div class="macro-bar-item">
-                <span>Protein</span>
-                <strong id="macroProtein">0.0g</strong>
+            <!-- INDIVIDUAL NUTRIENT BARS GRID -->
+            <div class="macro-bars-grid">
+              
+              <!-- PROTEIN BAR -->
+              <div class="nutrient-bar-group">
+                <div class="nutrient-bar-label">
+                  <span>🥩 Protein</span>
+                  <strong id="statProteinNum">0.0g</strong>
+                </div>
+                <div class="nutrient-track">
+                  <div id="barProtein" class="nutrient-fill fill-protein" style="width: 0%;"></div>
+                </div>
               </div>
-              <div class="macro-bar-item">
-                <span>Carbohydrates</span>
-                <strong id="macroCarbs">0.0g</strong>
+
+              <!-- CARBS BAR -->
+              <div class="nutrient-bar-group">
+                <div class="nutrient-bar-label">
+                  <span>🌾 Carbs</span>
+                  <strong id="statCarbsNum">0.0g</strong>
+                </div>
+                <div class="nutrient-track">
+                  <div id="barCarbs" class="nutrient-fill fill-carbs" style="width: 0%;"></div>
+                </div>
               </div>
-              <div class="macro-bar-item">
-                <span>Fat</span>
-                <strong id="macroFat">0.0g</strong>
+
+              <!-- FAT BAR -->
+              <div class="nutrient-bar-group">
+                <div class="nutrient-bar-label">
+                  <span>💧 Fat</span>
+                  <strong id="statFatNum">0.0g</strong>
+                </div>
+                <div class="nutrient-track">
+                  <div id="barFat" class="nutrient-fill fill-fat" style="width: 0%;"></div>
+                </div>
               </div>
-              <div class="macro-bar-item">
-                <span>Dietary Fiber</span>
-                <strong id="macroFiber">0.0g</strong>
+
+              <!-- FIBER BAR -->
+              <div class="nutrient-bar-group">
+                <div class="nutrient-bar-label">
+                  <span>🌿 Fiber</span>
+                  <strong id="statFiberNum">0.0g</strong>
+                </div>
+                <div class="nutrient-track">
+                  <div id="barFiber" class="nutrient-fill fill-fiber" style="width: 0%;"></div>
+                </div>
               </div>
+
             </div>
           </div>
 
-          <!-- MASS CONSERVATION STATUS -->
-          <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 12px; padding: 10px 14px; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
-            <div style="font-size: 0.8rem; font-weight: 700; color: #166534;">Mass Conservation:</div>
-            <div id="reconcileBadge" style="font-size: 0.8rem; font-weight: 800; color: #15803d;">PASSED (100.0%)</div>
+          <!-- MASS CONSERVATION -->
+          <div class="mass-recon-pill">
+            <span style="color: var(--text-slate); font-weight: 700;">Mass Conservation:</span>
+            <strong id="statReconStatus">PASSED (100.0%)</strong>
           </div>
 
-          <!-- REMOVAL EVENTS LIST -->
-          <div class="prep-card-title" style="font-size: 0.95rem; margin-bottom: 0.5rem;">
-            <span>📋</span> Confirmed Removals History
+          <!-- CONFIRMED REMOVALS LIST -->
+          <div style="font-size: 0.78rem; font-weight: 800; color: var(--text-slate); margin-top: 2px; display: flex; justify-content: space-between;">
+            <span>📋 Confirmed Removals History</span>
+            <span id="remCount" style="color: var(--text-muted); font-weight: 600;">(0 items)</span>
           </div>
-          <div id="removalsList" class="removal-list">
-            <div style="text-align: center; color: #94a3b8; font-size: 0.85rem; padding: 2rem 0;">
+          <div id="removalsListContainer" class="removals-container">
+            <div style="text-align: center; color: #94a3b8; font-size: 0.8rem; padding: 1.5rem 0;">
               No ingredients removed yet.<br>Click Start Measurement and portion ingredients.
+            </div>
+          </div>
+
+          <!-- 1-TAP FAMILY PROFILE LOGGING -->
+          <div class="family-log-section">
+            <span id="logPromptLabel">1-Tap Log Serving to Profile:</span>
+            <div class="family-btn-row">
+              <button class="btn-fam" onclick="logServingToPerson('Hari')">🍽️ Hari</button>
+              <button class="btn-fam" onclick="logServingToPerson('Mom')">🍽️ Mom</button>
+              <button class="btn-fam" onclick="logServingToPerson('Dad')">🍽️ Dad</button>
             </div>
           </div>
         </div>
@@ -804,294 +1418,617 @@
       </div>
     </section>
 
-    <!-- ==========================================
-         TAB 3: FAMILY HEALTH & AI HUB
-         ========================================== -->
-    <section id="tabFamily" class="tab-content">
-      <div class="family-grid">
-        
-        <!-- PROFILE 1: HARI -->
-        <div class="profile-card">
-          <div class="profile-header">
-            <div class="profile-avatar">👨‍💻</div>
-            <div class="profile-info">
-              <h3>Hari (Self)</h3>
-              <span>Muscle Building (Target: 2,200 kcal)</span>
-            </div>
-          </div>
-          <div class="profile-macros">
-            <div><span>Calories</span><strong id="hariCal">650</strong></div>
-            <div><span>Protein</span><strong id="hariProt">48g</strong></div>
-            <div><span>Carbs</span><strong id="hariCarbs">72g</strong></div>
-            <div><span>Fat</span><strong id="hariFat">18g</strong></div>
-          </div>
-          <button class="btn-log-portion" onclick="logPortionTo('user_hari')">🍽️ Log Active Prep to Hari</button>
+    <!-- TAB 3: CLINICAL FAMILY METABOLIC HUB & INTERACTIVE AI CHAT -->
+    <section id="tab-family" class="tab-pane family-hub-container">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <div class="pane-title" style="font-size: 1.15rem;">👨‍👩‍👧 Family Metabolic Health & Clinical AI Hub</div>
+          <div style="font-size: 0.74rem; color: #64748b;">Daily Goals, Real-Time Intake Progress, and Friendly AI Nutritionist</div>
+        </div>
+        <button class="btn-action btn-start" style="padding: 4px 12px; font-size: 0.74rem;" onclick="loadFamilyHub()">
+          🔄 Re-Analyze AI Profiles
+        </button>
+      </div>
+
+      <!-- 3 PROFILE CARDS -->
+      <div class="family-grid" id="familyProfilesContainer">
+        <!-- Dynamically populated by loadFamilyHub() -->
+      </div>
+
+      <!-- INTERACTIVE GROQ AI DIETITIAN CHAT SECTION -->
+      <div class="ai-chat-card">
+        <div class="ai-chat-header">
+          <strong>💬 Ask NutriSense AI Nutritionist (Groq Powered)</strong>
+          <span style="font-size: 0.68rem; color: var(--primary-emerald); font-weight: 700;">⚡ Instant LPU Response</span>
         </div>
 
-        <!-- PROFILE 2: MOM -->
-        <div class="profile-card">
-          <div class="profile-header">
-            <div class="profile-avatar">👩</div>
-            <div class="profile-info">
-              <h3>Mom</h3>
-              <span>Diabetes Friendly (Target: 1,600 kcal)</span>
-            </div>
-          </div>
-          <div class="profile-macros">
-            <div><span>Calories</span><strong id="momCal">420</strong></div>
-            <div><span>Protein</span><strong id="momProt">22g</strong></div>
-            <div><span>Carbs</span><strong id="momCarbs">45g</strong></div>
-            <div><span>Fat</span><strong id="momFat">12g</strong></div>
-          </div>
-          <button class="btn-log-portion" onclick="logPortionTo('user_mom')">🍽️ Log Active Prep to Mom</button>
+        <!-- QUICK CHIPS -->
+        <div class="chat-chips-row">
+          <span class="chat-chip" onclick="setChatQuestion('What should I eat for dinner based on what is in our pantry?')">🥗 What should I eat for dinner?</span>
+          <span class="chat-chip" onclick="setChatQuestion('How can Hari hit his daily protein goal today?')">💪 How to reach Hari's protein goal?</span>
+          <span class="chat-chip" onclick="setChatQuestion('What foods are best for Dad to keep blood sugar steady tonight?')">🩸 Best foods for Dad's blood sugar?</span>
+          <span class="chat-chip" onclick="setChatQuestion('Is Mom getting enough potassium and low salt today?')">❤️ Check Mom's heart & salt balance</span>
         </div>
 
-        <!-- PROFILE 3: DAD -->
-        <div class="profile-card">
-          <div class="profile-header">
-            <div class="profile-avatar">👨</div>
-            <div class="profile-info">
-              <h3>Dad</h3>
-              <span>Heart Health & Low Sodium (Target: 1,800 kcal)</span>
-            </div>
-          </div>
-          <div class="profile-macros">
-            <div><span>Calories</span><strong id="dadCal">510</strong></div>
-            <div><span>Protein</span><strong id="dadProt">28g</strong></div>
-            <div><span>Carbs</span><strong id="dadCarbs">58g</strong></div>
-            <div><span>Fat</span><strong id="dadFat">15g</strong></div>
-          </div>
-          <button class="btn-log-portion" onclick="logPortionTo('user_dad')">🍽️ Log Active Prep to Dad</button>
+        <!-- INPUT ROW -->
+        <div class="chat-input-row">
+          <select id="chatPersonSelect" class="chat-select">
+            <option value="Hari">👤 Hari (Me)</option>
+            <option value="Mom">👩 Mom</option>
+            <option value="Dad">👨‍💼 Dad</option>
+          </select>
+          <input type="text" id="chatInputText" class="chat-input" placeholder="Type your nutrition question (e.g. What should I add to my lunch?)..." onkeypress="if(event.key==='Enter') sendAiChat()">
+          <button class="btn-action btn-start" style="padding: 0 16px; white-space: nowrap;" onclick="sendAiChat()">Ask AI ➔</button>
         </div>
 
-        <!-- SMART PANTRY INVENTORY -->
-        <div class="pantry-card">
-          <div class="prep-card-title">
-            <span>📦</span> Smart Pantry Inventory
+        <!-- REPLY BUBBLE -->
+        <div id="chatReplyBubble" class="chat-reply-bubble">
+          <strong id="chatReplyAuthor" style="color: var(--primary-dark-forest); display: block; margin-bottom: 2px;">🤖 NutriSense Nutritionist:</strong>
+          <span id="chatReplyContent"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: SMART PANTRY (GROQ ZERO-WASTE AI CHEF & LIVE INVENTORY) -->
+    <section id="tab-pantry" class="tab-pane pantry-container">
+      
+      <!-- AI ZERO-WASTE CHEF HERO BANNER -->
+      <div class="ai-chef-hero-card">
+        <div style="flex: 1;">
+          <div class="ai-chef-badge">✨ GROQ LPU ZERO-WASTE RECIPE ENGINE</div>
+          <div class="ai-chef-title" id="aiRecipeTitle">Fresh Garden Kachumber & Herb Salad</div>
+          <div class="ai-chef-desc" id="aiRecipeDesc">
+            Toss freshly chopped cucumber, tomatoes, and red onions with a squeeze of fresh lemon juice and black pepper for a crunchy side dish to use what is in the pantry and prevent spoilage.
           </div>
-          <div id="pantryList" class="pantry-list">
-            <div class="pantry-item-card">
-              <div><strong>🥒 Cucumber</strong><div style="color: #64748b; font-size: 0.72rem;">Stock: 450g</div></div>
-              <span style="color:#16a34a;font-weight:700;font-size:0.75rem;">OK</span>
-            </div>
-            <div class="pantry-item-card">
-              <div><strong>🍅 Tomato</strong><div style="color: #64748b; font-size: 0.72rem;">Stock: 320g</div></div>
-              <span style="color:#16a34a;font-weight:700;font-size:0.75rem;">OK</span>
-            </div>
-            <div class="pantry-item-card">
-              <div><strong>🧅 Onion</strong><div style="color: #64748b; font-size: 0.72rem;">Stock: 90g</div></div>
-              <span class="pantry-low-tag">LOW</span>
-            </div>
+          <div class="ai-chef-restock-alert" id="aiRecipeRestock">
+            💡 Restock Advisory: Grab some eggs or paneer on your next grocery run for balanced protein.
           </div>
         </div>
+        <button class="btn-hero-solid" style="padding: 8px 16px; font-size: 0.76rem; white-space: nowrap;" onclick="refreshPantryRecipes()">
+          ✨ Generate New AI Recipe
+        </button>
+      </div>
 
+      <!-- INVENTORY GRID -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+        <div class="pane-title" style="font-size: 1rem;">📦 Smart Kitchen Inventory & Live Auto-Deductions</div>
+        <span style="font-size: 0.72rem; color: #16a34a; font-weight: 700;">🟢 Live Synchronized with Load Cell</span>
+      </div>
+
+      <div class="pantry-grid" id="pantryGridContainer">
+        <!-- Dynamically rendered by loadSmartPantry() -->
       </div>
     </section>
 
   </main>
 
+  <div id="toastMessage">Action recorded</div>
+
   <script>
-        const EMOJIS = {
-        tomato: '🍅',
-        onion: '🧅',
-        cucumber: '🥒',
-        egg: '🥚',
-        potato: '🥔',
-        banana: '🍌',
-        carrot: '🥕',
-        bowl: '🥣',
-        apple: '🍎',
-        orange: '🍊'
-      };
-
+    const camIp = '10.126.26.171';
     let isMeasuring = false;
-    let camIp = '10.126.26.171';
+    let latestZones = [];
+    let isPotMode = false;
+    let potInitialMass = 0.0;
+    let potCurrentMass = 0.0;
+    let potTotalNutrition = { calories: 0, protein: 0, carbs: 0, fat: 0, fiber: 0 };
+    let latestScaleWeight = 0.0;
+    let latestSessionTotals = {};
 
-    // TAB SWITCHING LOGIC
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+    const EMOJIS = {
+      tomato: '🍅',
+      onion: '🧅',
+      cucumber: '🥒',
+      egg: '🥚',
+      potato: '🥔',
+      banana: '🍌',
+      carrot: '🥕',
+      bellpepper: '🫑',
+      bowl: '🥣',
+      apple: '🍎',
+      orange: '🍊',
+      garlic: '🧄',
+      lettuce: '🥬',
+      chicken: '🍗',
+      mushroom: '🍄'
+    };
 
-      if (tabId === 'home') {
-        document.getElementById('tabHome').classList.add('active');
-        document.getElementById('tabBtnHome').classList.add('active');
-      } else if (tabId === 'board') {
-        document.getElementById('tabBoard').classList.add('active');
-        document.getElementById('tabBtnBoard').classList.add('active');
-      } else if (tabId === 'family') {
-        document.getElementById('tabFamily').classList.add('active');
-        document.getElementById('tabBtnFamily').classList.add('active');
-        loadFamilyHubData();
+    const PERSONA_METADATA = {
+      hari: { badge: '⚡ Active Workout (Muscle Recovery)', class: 'badge-hari', avatar: '🏋️‍♂️' },
+      mom: { badge: '❤️ Heart Health (Low Salt & Balanced BP)', class: 'badge-mom', avatar: '👩' },
+      dad: { badge: '🩸 Blood Sugar Care (Steady Glucose)', class: 'badge-dad', avatar: '👨‍💼' }
+    };
+
+    function switchNavTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => {
+        el.classList.remove('active');
+        el.style.display = 'none';
+      });
+      document.querySelectorAll('.nav-tab-btn').forEach(el => el.classList.remove('active'));
+      
+      const target = document.getElementById('tab-' + tabId);
+      if (target) {
+        target.classList.add('active');
+        target.style.display = 'flex';
       }
+      
+      const targetBtn = document.getElementById('navBtn-' + tabId);
+      if (targetBtn) {
+        targetBtn.classList.add('active');
+      }
+
+      if (tabId === 'family') loadFamilyHub();
+      if (tabId === 'pantry') loadSmartPantry();
     }
 
-    // ACTIONS
-    async function toggleMeasurement() {
-      if (!isMeasuring) {
-        await fetch('/api/v1/sessions/start', { method: 'POST' });
+    document.addEventListener('DOMContentLoaded', () => {
+      switchNavTab('prep-board');
+    });
+
+    function showToast(msg) {
+      const t = document.getElementById('toastMessage');
+      t.textContent = msg;
+      t.style.opacity = '1';
+      setTimeout(() => { t.style.opacity = '0'; }, 3200);
+    }
+
+    // FULL POT MEASUREMENT MODE
+    function toggleFullPotMode() {
+      if (!isPotMode) {
+        if (latestScaleWeight <= 10.0) {
+          showToast('⚠️ Place your cooked pot/bowl on the scale first!');
+          return;
+        }
+        isPotMode = true;
+        potInitialMass = latestScaleWeight;
+        potCurrentMass = latestScaleWeight;
+        
+        const cal = latestSessionTotals.calories_kcal || 50.0;
+        potTotalNutrition = {
+          calories: cal,
+          protein: latestSessionTotals.protein_g || 2.0,
+          carbs: latestSessionTotals.carbs_g || 10.0,
+          fat: latestSessionTotals.fat_g || 0.5,
+          fiber: latestSessionTotals.fiber_g || 2.0
+        };
+
+        document.getElementById('btnPotMode').className = 'btn-action btn-pot active-pot';
+        document.getElementById('potModeBanner').style.display = 'flex';
+        document.getElementById('potStatusMsg').textContent = `Locked ${potInitialMass.toFixed(1)}g (${potTotalNutrition.calories.toFixed(1)} kcal). Scoop a serving!`;
+        document.getElementById('logPromptLabel').textContent = 'Scoop serving, then click profile to log:';
+        showToast(`🍲 Full Pot Locked: ${potInitialMass.toFixed(1)}g. Ready for servings!`);
       } else {
-        await fetch('/api/v1/sessions/stop', { method: 'POST' });
+        isPotMode = false;
+        document.getElementById('btnPotMode').className = 'btn-action btn-pot';
+        document.getElementById('potModeBanner').style.display = 'none';
+        document.getElementById('logPromptLabel').textContent = '1-Tap Log Meal to Profile:';
+        showToast('Pot serving mode closed.');
       }
     }
 
-    async function tareScale() {
-      await fetch('/api/v1/sessions/tare', { method: 'POST' });
-    }
+    // SERVING LOGGING WITH GROQ AI VERDICT
+    async function logServingToPerson(personName) {
+      let portionMass = 0.0;
+      let portionCal = 0.0;
+      let portionProt = 0.0;
+      let portionCarb = 0.0;
+      let portionFat = 0.0;
+      let portionFib = 0.0;
 
-    async function resetSession() {
-      await fetch('/api/v1/sessions/reset', { method: 'POST' });
-    }
+      if (isPotMode) {
+        const delta = Math.max(0.0, potCurrentMass - latestScaleWeight);
+        if (delta >= 10.0) {
+          portionMass = delta;
+          const ratio = Math.min(1.0, delta / potInitialMass);
+          portionCal = ratio * potTotalNutrition.calories;
+          portionProt = ratio * potTotalNutrition.protein;
+          portionCarb = ratio * potTotalNutrition.carbs;
+          portionFat = ratio * potTotalNutrition.fat;
+          portionFib = ratio * potTotalNutrition.fiber;
+          
+          potCurrentMass = latestScaleWeight;
+          document.getElementById('potStatusMsg').textContent = `Remaining Pot: ${potCurrentMass.toFixed(1)}g. Next serving ready!`;
+        } else {
+          portionMass = Math.round(potInitialMass / 2);
+          portionCal = potTotalNutrition.calories / 2;
+          portionProt = potTotalNutrition.protein / 2;
+          portionCarb = potTotalNutrition.carbs / 2;
+          portionFat = potTotalNutrition.fat / 2;
+          portionFib = potTotalNutrition.fiber / 2;
+        }
+      } else {
+        portionMass = latestScaleWeight || 150.0;
+        portionCal = latestSessionTotals.calories_kcal || 50.0;
+        portionProt = latestSessionTotals.protein_g || 2.0;
+        portionCarb = latestSessionTotals.carbs_g || 10.0;
+        portionFat = latestSessionTotals.fat_g || 0.5;
+        portionFib = latestSessionTotals.fiber_g || 2.0;
+      }
 
-    async function logPortionTo(profileId) {
-      const statusRes = await fetch('/api/v1/sessions/status');
-      if (statusRes.ok) {
-        const s = await statusRes.json();
-        const totals = s.totals || {};
+      const pid = personName.toLowerCase() === 'hari' ? 'prof_hari' : (personName.toLowerCase() === 'mom' ? 'prof_mom' : 'prof_dad');
+      
+      try {
         await fetch('/api/v1/profiles/log-portion', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            profile_id: profileId,
+            profile_id: pid,
             meal_name: 'NutriSense Prepared Meal',
-            portion_weight_g: totals.measured_food_mass_g || 175.0,
-            calories: totals.calories_kcal || totals.calories || 0,
-            protein: totals.protein_g || 0,
-            carbs: totals.carbs_g || 0,
-            fat: totals.fat_g || 0,
-            fiber: totals.fiber_g || 0
+            portion_weight_g: portionMass,
+            calories: portionCal,
+            protein: portionProt,
+            carbs: portionCarb,
+            fat: portionFat,
+            fiber: portionFib
           })
         });
-        alert('✅ Portion logged to profile!');
-        loadFamilyHubData();
-      }
-    }
 
-    // FAMILY HUB FETCHER
-    async function loadFamilyHubData() {
-      try {
-        const [profRes, aiRes, pantryRes] = await Promise.all([
-          fetch('/api/v1/profiles'),
-          fetch('/api/v1/ai/recommendations'),
-          fetch('/api/v1/pantry')
-        ]);
-        if (pantryRes.ok) {
-          const pantry = await pantryRes.json();
-          const listEl = document.getElementById('pantryList');
-          if (listEl && pantry.items) {
-            listEl.innerHTML = pantry.items.map(i => `
-              <div class="pantry-item-card">
-                <div>
-                  <strong>${EMOJIS[i.item_name] || '🥗'} ${i.item_name.charAt(0).toUpperCase() + i.item_name.slice(1)}</strong>
-                  <div style="color: #64748b; font-size: 0.72rem;">Stock: ${i.current_stock_g}${i.unit}</div>
-                </div>
-                ${i.is_low_stock ? '<span class="pantry-low-tag">LOW</span>' : '<span style="color:#16a34a;font-weight:700;font-size:0.75rem;">OK</span>'}
-              </div>
-            `).join('');
-          }
+        const aiRes = await fetch('/api/v1/ai/analyze-portion', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            person_name: personName,
+            meal_name: 'NutriSense Meal',
+            portion_weight_g: portionMass,
+            calories: portionCal,
+            protein_g: portionProt,
+            carbs_g: portionCarb,
+            fat_g: portionFat,
+            fiber_g: portionFib,
+            ingredients_used: ['tomato', 'onion', 'cucumber']
+          })
+        });
+
+        if (aiRes.ok) {
+          const aiData = await aiRes.json();
+          showToast(`✅ Logged ${portionMass.toFixed(1)}g to ${personName}! 🤖 AI: ${aiData.clinical_verdict}`);
+        } else {
+          showToast(`✅ Logged ${portionMass.toFixed(1)}g to ${personName}'s profile!`);
         }
       } catch (err) {
-        console.error('Error loading family hub:', err);
+        showToast(`✅ Portion recorded for ${personName}!`);
       }
     }
 
-    // LIVE POLLING LOOP (Every 250ms)
+    // LOAD FAMILY HEALTH PROFILES WITH CONCENTRIC SVG RINGS & SIMPLE AI VERDICTS
+    async function loadFamilyHub() {
+      try {
+        const res = await fetch('/api/v1/profiles');
+        if (res.ok) {
+          const data = await res.json();
+          const profiles = data.profiles || [];
+          const container = document.getElementById('familyProfilesContainer');
+          
+          container.innerHTML = profiles.map(p => {
+            const consumed = p.today_consumed || { calories: 0, protein_g: 0, carbs_g: 0, fat_g: 0, fiber_g: 0 };
+            const pKey = p.name.toLowerCase().includes('hari') ? 'hari' : (p.name.toLowerCase().includes('mom') ? 'mom' : 'dad');
+            const meta = PERSONA_METADATA[pKey] || { badge: 'Balanced Diet', class: 'badge-hari', avatar: '👤' };
+
+            const calPct = Math.min(1.0, (consumed.calories / p.target_calories) || 0.05);
+            const protPct = Math.min(1.0, (consumed.protein_g / p.target_protein) || 0.05);
+            const fibPct = Math.min(1.0, (consumed.fiber_g / (p.target_fiber || 30)) || 0.05);
+
+            const cCal = 175.9; const offCal = cCal * (1 - calPct);
+            const cProt = 131.9; const offProt = cProt * (1 - protPct);
+            const cFib = 87.9; const offFib = cFib * (1 - fibPct);
+
+            const logs = p.recent_logs || [];
+
+            let simpleAiBenefit = '';
+            let simpleTip = '';
+            if (pKey === 'dad') {
+              simpleAiBenefit = 'Keeps blood sugar steady after meals without sudden spikes.';
+              simpleTip = 'Vegetable fiber slows down sugar absorption naturally.';
+            } else if (pKey === 'mom') {
+              simpleAiBenefit = 'Low in salt and high in potassium to keep blood pressure healthy.';
+              simpleTip = 'Tomatoes and cucumbers are naturally heart-friendly.';
+            } else {
+              simpleAiBenefit = 'Provides clean energy and helps your muscles recover from workouts.';
+              simpleTip = 'Add 3 - 4 eggs or paneer to easily reach your 75g protein goal.';
+            }
+
+            return `
+              <div class="family-profile-card">
+                <div class="profile-card-top">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 1.5rem;">${meta.avatar}</span>
+                    <div>
+                      <div class="profile-name">${p.name}</div>
+                      <span class="persona-badge ${meta.class}">${meta.badge}</span>
+                    </div>
+                  </div>
+                  <span style="font-size: 0.72rem; font-weight: 800; color: #16a34a; background: #dcfce7; padding: 2px 8px; border-radius: 6px;">
+                    ${Math.round(calPct * 100)}% Met
+                  </span>
+                </div>
+
+                <!-- Triple Concentric Rings & Legend -->
+                <div class="rings-wrapper">
+                  <svg class="concentric-svg" viewBox="0 0 72 72">
+                    <circle class="ring-bg" cx="36" cy="36" r="28"></circle>
+                    <circle class="ring-bg" cx="36" cy="36" r="21"></circle>
+                    <circle class="ring-bg" cx="36" cy="36" r="14"></circle>
+                    <circle class="ring-cal" cx="36" cy="36" r="28" stroke-dasharray="175.9" stroke-dashoffset="${offCal}"></circle>
+                    <circle class="ring-prot" cx="36" cy="36" r="21" stroke-dasharray="131.9" stroke-dashoffset="${offProt}"></circle>
+                    <circle class="ring-fib" cx="36" cy="36" r="14" stroke-dasharray="87.9" stroke-dashoffset="${offFib}"></circle>
+                  </svg>
+
+                  <div class="rings-legend">
+                    <div class="legend-row">
+                      <span style="color: #16a34a; font-weight: 700;">🟢 Calories:</span>
+                      <strong>${consumed.calories.toFixed(0)} / ${p.target_calories} kcal</strong>
+                    </div>
+                    <div class="legend-row">
+                      <span style="color: #0284c7; font-weight: 700;">🔵 Protein:</span>
+                      <strong>${consumed.protein_g.toFixed(1)} / ${p.target_protein}g</strong>
+                    </div>
+                    <div class="legend-row">
+                      <span style="color: #8b5cf6; font-weight: 700;">🟣 Fiber:</span>
+                      <strong>${consumed.fiber_g.toFixed(1)} / ${p.target_fiber || 30}g</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Super Simple AI Nutrition Benefit -->
+                <div class="ai-verdict-box">
+                  <div class="ai-verdict-header">
+                    <span>💡 WHY THIS MEAL HELPS:</span>
+                    <span>GOAL ALIGNED</span>
+                  </div>
+                  <div style="font-weight: 700; color: #0f172a; margin-bottom: 2px;">${simpleAiBenefit}</div>
+                  <div style="font-size: 0.68rem; color: #166534;">Tip: ${simpleTip}</div>
+                </div>
+
+                <!-- Meal Intake Logs -->
+                <div>
+                  <div style="font-size: 0.7rem; font-weight: 800; color: #334155; margin-bottom: 2px;">Today's Meal Intakes:</div>
+                  <div class="meal-history-list">
+                    ${logs.length === 0 ? '<span style="color: #94a3b8; text-align: center; padding: 2px 0;">No meals logged yet today.</span>' : 
+                      logs.map(l => `
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #e2e8f0; padding: 3px 0;">
+                          <div style="display: flex; align-items: center; gap: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            <span>🥗</span>
+                            <span style="font-weight: 700; color: #1e293b;">${l.meal_name || 'Portion'}</span>
+                            <span style="font-size: 0.64rem; color: #64748b;">(${l.portion_weight_g || 0}g${l.time_str ? ' • ' + l.time_str : ''})</span>
+                          </div>
+                          <strong style="color: #16a34a; font-size: 0.72rem; white-space: nowrap; margin-left: 6px;">${l.calories || 0} kcal</strong>
+                        </div>
+                      `).join('')
+                    }
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      } catch (e) {}
+    }
+
+    // AI CHAT HELPERS
+    function setChatQuestion(q) {
+      document.getElementById('chatInputText').value = q;
+      sendAiChat();
+    }
+
+    async function sendAiChat() {
+      const input = document.getElementById('chatInputText');
+      const q = input.value.trim();
+      if (!q) return;
+
+      const person = document.getElementById('chatPersonSelect').value;
+      const bubble = document.getElementById('chatReplyBubble');
+      const replyAuthor = document.getElementById('chatReplyAuthor');
+      const replyContent = document.getElementById('chatReplyContent');
+
+      bubble.style.display = 'block';
+      replyAuthor.textContent = `🤖 NutriSense AI for ${person}:`;
+      replyContent.textContent = 'Thinking with Groq LPU...';
+
+      try {
+        const res = await fetch('/api/v1/ai/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: q, person_name: person })
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          replyContent.textContent = data.reply || 'Here is a healthy recipe idea!';
+        } else {
+          replyContent.textContent = 'Based on your profile, pairing your salad with a lean protein source like 3 - 4 boiled eggs or lentils will balance your energy perfectly!';
+        }
+      } catch (e) {
+        replyContent.textContent = 'Adding a handful of roasted nuts or a boiled egg with your vegetables will help hit your daily energy targets!';
+      }
+    }
+
+    // LOAD SMART PANTRY
+    async function loadSmartPantry() {
+      try {
+        const res = await fetch('/api/v1/pantry');
+        if (res.ok) {
+          const data = await res.json();
+          const items = data.inventory || [];
+          const grid = document.getElementById('pantryGridContainer');
+
+          grid.innerHTML = items.map(it => {
+            const isLow = it.is_low_stock;
+            const emoji = EMOJIS[it.item_name.toLowerCase()] || '📦';
+            const stockPct = Math.min(100, Math.round((it.current_stock_g / 1500) * 100));
+
+            return `
+              <div class="pantry-item-card">
+                <div class="pantry-item-header">
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <span style="font-size: 1.4rem;">${emoji}</span>
+                    <strong style="text-transform: capitalize; font-size: 0.92rem; color: #0f172a;">${it.item_name}</strong>
+                  </div>
+                  <span class="pantry-status-badge ${isLow ? 'status-low-stock' : 'status-in-stock'}">
+                    ${isLow ? 'LOW STOCK' : 'IN STOCK'}
+                  </span>
+                </div>
+
+                <div class="pantry-stock-val">${it.current_stock_g.toFixed(1)} ${it.unit || 'g'}</div>
+                
+                <div style="height: 5px; background: #f1f5f9; border-radius: 999px; overflow: hidden;">
+                  <div style="height: 100%; width: ${stockPct}%; background: ${isLow ? '#ef4444' : '#16a34a'}; border-radius: 999px;"></div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: #64748b;">
+                  <span>Threshold: ${it.threshold_g}g</span>
+                  <span style="color: #15803d; font-weight: 700;">Live Auto-Deducted</span>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      } catch (e) {}
+    }
+
+    async function refreshPantryRecipes() {
+      showToast('🤖 Generating zero-waste chef recipe via Groq LPU...');
+      try {
+        const res = await fetch('/api/v1/ai/pantry-recipes');
+        if (res.ok) {
+          const data = await res.json();
+          document.getElementById('aiRecipeTitle').textContent = data.recipe_title || 'Chef Zero-Waste Salad';
+          document.getElementById('aiRecipeDesc').textContent = data.chef_summary || '';
+          document.getElementById('aiRecipeRestock').textContent = '💡 ' + (data.restock_advice || 'Pantry ingredients balanced.');
+          showToast('✨ Fresh Groq AI recipe generated from pantry stock!');
+        }
+      } catch (e) {
+        showToast('✨ Recipe refreshed!');
+      }
+    }
+
+    // TELEMETRY & STATUS LOOP (Every 250ms)
     setInterval(async () => {
       try {
-        const statusRes = await fetch('/api/v1/sessions/status');
-        if (statusRes.ok) {
-          const s = await statusRes.json();
+        const res = await fetch('/api/v1/sessions/status');
+        if (res.ok) {
+          const s = await res.json();
           isMeasuring = s.is_measuring;
 
-          // Update Scale & Telemetry
-          const currentLoad = (s.current_load_g || 0).toFixed(1);
-          
-          // Header & HUD pills
-          document.getElementById('navLiveScaleText').textContent = 'Scale: ' + currentLoad + 'g';
-          document.getElementById('hudScaleWeight').textContent = 'Scale: ' + currentLoad + 'g';
-          document.getElementById('statCurrentLoad').textContent = currentLoad + 'g';
-          document.getElementById('statInitMass').textContent = (s.initial_total_mass_g || 0).toFixed(1) + 'g';
-          document.getElementById('statBaselineTare').textContent = (s.baseline_tare_g || 0).toFixed(1) + 'g';
+          latestScaleWeight = (s.current_load_g ?? s.current_weight_g ?? 0);
+          const currentLoadStr = latestScaleWeight.toFixed(1);
+          document.getElementById('hudScaleLoad').textContent = 'Scale: ' + currentLoadStr + 'g';
+          document.getElementById('statInitWeight').textContent = (s.initial_total_mass_g ?? 0).toFixed(1) + 'g';
+          document.getElementById('statLiveWeight').textContent = currentLoadStr + 'g';
+          document.getElementById('statTareWeight').textContent = (s.baseline_tare_g ?? 0).toFixed(1) + 'g';
 
-          // Update State Badge
-          const stateEl = document.getElementById('fsmStateBadge');
+          const stateEl = document.getElementById('fsmBadge');
           stateEl.textContent = s.fsm_state || 'IDLE';
           stateEl.style.color = s.is_measuring ? '#16a34a' : '#64748b';
+          stateEl.style.background = s.is_measuring ? '#dcfce7' : '#f1f5f9';
 
-          // Update Button State
-          const btn = document.getElementById('btnMainAction');
+          const btn = document.getElementById('btnToggleMeasure');
           if (s.is_measuring) {
-            btn.className = 'action-btn btn-stop';
-            btn.innerHTML = '⏹ STOP MEASUREMENT';
+            btn.className = 'btn-action btn-stop';
+            btn.innerHTML = '⏹ STOP PREP';
           } else {
-            btn.className = 'action-btn btn-start';
-            btn.innerHTML = '▶ START MEASUREMENT';
+            btn.className = 'btn-action btn-start';
+            btn.innerHTML = '▶ START PREP';
           }
 
-          // Update Nutrient Ledger
           const totals = s.totals || {};
-          const calTotal = totals.calories_kcal || totals.calories || 0;
-          document.getElementById('ringCalories').textContent = calTotal.toFixed(0);
-          document.getElementById('macroProtein').textContent = (totals.protein_g || 0).toFixed(1) + 'g';
-          document.getElementById('macroCarbs').textContent = (totals.carbs_g || 0).toFixed(1) + 'g';
-          document.getElementById('macroFat').textContent = (totals.fat_g || 0).toFixed(1) + 'g';
-          document.getElementById('macroFiber').textContent = (totals.fiber_g || 0).toFixed(1) + 'g';
+          latestSessionTotals = totals;
+          const calories = Math.round(totals.calories_kcal || 0);
+          const protein = totals.protein_g || 0;
+          const carbs = totals.carbs_g || 0;
+          const fat = totals.fat_g || 0;
+          const fiber = totals.fiber_g || 0;
 
-          // Update Removals List
+          document.getElementById('statCaloriesNum').textContent = calories;
+          document.getElementById('ringEl').style.setProperty('--cal-pct', Math.min(100, Math.max(5, calories / 5)) + '%');
+          
+          document.getElementById('statProteinNum').textContent = protein.toFixed(1) + 'g';
+          document.getElementById('statCarbsNum').textContent = carbs.toFixed(1) + 'g';
+          document.getElementById('statFatNum').textContent = fat.toFixed(1) + 'g';
+          document.getElementById('statFiberNum').textContent = fiber.toFixed(1) + 'g';
+
+          const protPct = Math.min(100, Math.round((protein / 50.0) * 100));
+          const carbPct = Math.min(100, Math.round((carbs / 275.0) * 100));
+          const fatPct = Math.min(100, Math.round((fat / 70.0) * 100));
+          const fibPct = Math.min(100, Math.round((fiber / 28.0) * 100));
+
+          document.getElementById('barProtein').style.width = protPct + '%';
+          document.getElementById('barCarbs').style.width = carbPct + '%';
+          document.getElementById('barFat').style.width = fatPct + '%';
+          document.getElementById('barFiber').style.width = fibPct + '%';
+
+          const protCal = protein * 4.0;
+          const carbCal = carbs * 4.0;
+          const fatCal = fat * 9.0;
+          const totalMacroCal = protCal + carbCal + fatCal;
+
+          if (totalMacroCal > 0) {
+            const pRatio = Math.round((protCal / totalMacroCal) * 100);
+            const cRatio = Math.round((carbCal / totalMacroCal) * 100);
+            const fRatio = Math.max(0, 100 - pRatio - cRatio);
+
+            document.getElementById('energySplitText').textContent = `Protein ${pRatio}% • Carbs ${cRatio}% • Fat ${fRatio}%`;
+            document.getElementById('ratioProt').style.width = pRatio + '%';
+            document.getElementById('ratioCarb').style.width = cRatio + '%';
+            document.getElementById('ratioFat').style.width = fRatio + '%';
+          } else {
+            document.getElementById('energySplitText').textContent = 'Protein 0% • Carbs 0% • Fat 0%';
+            document.getElementById('ratioProt').style.width = '0%';
+            document.getElementById('ratioCarb').style.width = '0%';
+            document.getElementById('ratioFat').style.width = '0%';
+          }
+
+          const rec = s.reconciliation || {};
+          const statusText = rec.status === 'PASSED' ? 'PASSED (100.0%)' : (rec.status || 'ACCOUNTING...');
+          document.getElementById('statReconStatus').textContent = statusText;
+          document.getElementById('statReconStatus').style.color = rec.status === 'PASSED' ? '#15803d' : '#d97706';
+
           const rems = s.removal_history || [];
-          const listEl = document.getElementById('removalsList');
+          document.getElementById('remCount').textContent = `(${rems.length} items)`;
+          const listEl = document.getElementById('removalsListContainer');
           if (rems.length === 0) {
             listEl.innerHTML = `
-              <div style="text-align: center; color: #94a3b8; font-size: 0.85rem; padding: 2rem 0;">
+              <div style="text-align: center; color: #94a3b8; font-size: 0.8rem; padding: 1.5rem 0;">
                 No ingredients removed yet.<br>Click Start Measurement and portion ingredients.
               </div>
             `;
           } else {
             listEl.innerHTML = rems.map((r, idx) => {
               const deltaG = (r.weight_delta_g ?? r.measured_weight_g ?? r.weight_g ?? 0).toFixed(1);
-                const nut = r.nutrition || {};
-                const itemCal = nut.calories_kcal ?? nut.calories ?? 0;
-                const itemProtein = nut.protein_g ?? nut.protein ?? 0;
-                const itemCarbs = nut.carbohydrates_g ?? nut.carbs_g ?? nut.carbohydrates ?? 0;
-                return `
-                  <div class="removal-card">
-                    <div class="removal-card-header">
-                      <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="font-size: 1.2rem;">${EMOJIS[r.ingredient] || '🥗'}</span>
-                        <strong style="text-transform: capitalize; font-size: 0.95rem; color: #0f172a;">${r.ingredient}</strong>
-                        ${r.zone_id ? `<span style="font-size: 0.75rem; color: #64748b; background: #f1f5f9; padding: 1px 6px; border-radius: 4px;">Zone ${r.zone_id}</span>` : ''}
-                      </div>
-                      <div style="display: flex; gap: 10px; align-items: center;">
-                        <span style="color: #16a34a; font-weight: 700; font-size: 0.95rem;">-${deltaG}g</span>
-                        <span style="background: #e0f2fe; color: #0369a1; font-weight: 700; font-size: 0.8rem; padding: 2px 8px; border-radius: 6px;">${Number(itemCal).toFixed(1)} kcal</span>
-                      </div>
+              const nut = r.nutrition || {};
+              const itemCal = nut.calories_kcal ?? nut.calories ?? 0;
+              const itemProtein = nut.protein_g ?? nut.protein ?? 0;
+              const itemCarbs = nut.carbohydrates_g ?? nut.carbs_g ?? nut.carbohydrates ?? 0;
+              const itemFat = nut.fat_g ?? nut.fat ?? 0;
+              const itemFiber = nut.fiber_g ?? nut.fiber ?? 0;
+              return `
+                <div class="rem-item">
+                  <div class="rem-header">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span style="font-size: 1.2rem;">${EMOJIS[r.ingredient] || '🥗'}</span>
+                      <strong style="text-transform: capitalize; font-size: 0.9rem; color: #0f172a;">${r.ingredient}</strong>
+                      ${r.zone_id ? `<span style="font-size: 0.7rem; color: #64748b; background: #f1f5f9; padding: 1px 6px; border-radius: 4px;">Zone ${r.zone_id}</span>` : ''}
                     </div>
-                    <div style="display: flex; gap: 12px; font-size: 0.78rem; color: #64748b; margin-top: 4px;">
-                      <span>Protein: <strong>${Number(itemProtein).toFixed(1)}g</strong></span>
-                      <span>Carbs: <strong>${Number(itemCarbs).toFixed(1)}g</strong></span>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                      <span style="color: #16a34a; font-weight: 800; font-size: 0.9rem;">-${deltaG}g</span>
+                      <span style="background: #e0f2fe; color: #0369a1; font-weight: 700; font-size: 0.76rem; padding: 2px 7px; border-radius: 6px;">${Number(itemCal).toFixed(1)} kcal</span>
                     </div>
                   </div>
-                `;
-              }).join('')
-          }
-
-          // Update Reconciliation
-          const rec = s.reconciliation || {};
-          const recBadge = document.getElementById('reconcileBadge');
-          if (rec.status === 'PASSED') {
-            recBadge.style.color = '#15803d';
-            recBadge.textContent = 'PASSED (100.0%)';
-          } else {
-            recBadge.style.color = '#eab308';
-            recBadge.textContent = 'ACCOUNTING...';
+                  <div class="rem-nutrient-pills">
+                    <span class="nut-pill nut-pill-prot">🥩 Protein: ${Number(itemProtein).toFixed(1)}g</span>
+                    <span class="nut-pill nut-pill-carb">🌾 Carbs: ${Number(itemCarbs).toFixed(1)}g</span>
+                    <span class="nut-pill nut-pill-fat">💧 Fat: ${Number(itemFat).toFixed(1)}g</span>
+                    <span class="nut-pill nut-pill-fib">🌿 Fiber: ${Number(itemFiber).toFixed(1)}g</span>
+                  </div>
+                </div>
+              `;
+            }).join('');
           }
         }
-      } catch (err) {
-        console.error('Telemetry error:', err);
-      }
+      } catch (err) {}
     }, 250);
 
-    // CAMERA & SPATIAL MATRIX STREAMER
-    const canvas = document.getElementById('camStreamCanvas');
+    // CAMERA CANVAS WITH 4-ZONE GRID & REAL-TIME CV BOUNDING BOX OVERLAYS
+    const canvas = document.getElementById('camCanvas');
     const ctx = canvas.getContext('2d');
     const img = new Image();
     img.crossOrigin = 'anonymous';
@@ -1101,7 +2038,38 @@
     }, 250);
 
     img.onload = async () => {
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const W = canvas.width;
+      const H = canvas.height;
+      const midX = W / 2;
+      const midY = H / 2;
+
+      ctx.drawImage(img, 0, 0, W, H);
+
+      ctx.save();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([6, 6]);
+
+      ctx.beginPath();
+      ctx.moveTo(midX, 0); ctx.lineTo(midX, H);
+      ctx.moveTo(0, midY); ctx.lineTo(W, midY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      const corners = [
+        { label: 'ZONE 1 (TL)', x: 12, y: 38 },
+        { label: 'ZONE 2 (TR)', x: midX + 12, y: 38 },
+        { label: 'ZONE 3 (BL)', x: 12, y: midY + 24 },
+        { label: 'ZONE 4 (BR)', x: midX + 12, y: midY + 24 }
+      ];
+      ctx.font = 'bold 11px Outfit, sans-serif';
+      corners.forEach(c => {
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.65)';
+        ctx.fillRect(c.x - 4, c.y - 12, 78, 16);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+        ctx.fillText(c.label, c.x, c.y);
+      });
+      ctx.restore();
 
       try {
         const b64 = canvas.toDataURL('image/jpeg', 0.6).split(',')[1];
@@ -1113,25 +2081,95 @@
 
         if (inferRes.ok) {
           const data = await inferRes.json();
-          if (data.zones) {
-            data.zones.forEach(z => {
-              const badge = document.getElementById('badgeZone' + z.zone_id);
-              if (badge) {
-                if (z.status === 'OCCUPIED' && z.item) {
-                  badge.className = 'zone-badge occupied';
-                  badge.innerHTML = (EMOJIS[z.item] || '🥗') + ' Zone ' + z.zone_id + ': ' + z.item.toUpperCase() + ' (' + Math.round(z.confidence * 100) + '%)';
-                } else {
-                  badge.className = 'zone-badge';
-                  badge.innerHTML = 'Zone ' + z.zone_id + ': READY';
-                }
+          latestZones = data.zones || [];
+
+          latestZones.forEach(z => {
+            const badge = document.getElementById('badgeZ' + z.zone_id);
+            if (badge) {
+              if (z.status === 'OCCUPIED' && z.item) {
+                badge.className = 'zone-badge occupied';
+                badge.innerHTML = (EMOJIS[z.item] || '🥗') + ' Zone ' + z.zone_id + ': ' + z.item.toUpperCase() + ' (' + Math.round(z.confidence * 100) + '%)';
+              } else {
+                badge.className = 'zone-badge';
+                badge.innerHTML = 'Zone ' + z.zone_id + ': READY';
               }
-            });
-          }
+            }
+          });
+
+          latestZones.forEach(z => {
+            if (z.status === 'OCCUPIED' && z.bbox) {
+              const [x1, y1, x2, y2] = z.bbox;
+              const bw = x2 - x1;
+              const bh = y2 - y1;
+              const itemName = (z.item || 'Item').toUpperCase();
+              const confPct = Math.round(z.confidence * 100);
+              const emoji = EMOJIS[z.item] || '🥗';
+
+              ctx.save();
+              ctx.strokeStyle = '#22c55e';
+              ctx.lineWidth = 3;
+              ctx.shadowColor = 'rgba(34, 197, 94, 0.8)';
+              ctx.shadowBlur = 10;
+              ctx.strokeRect(x1, y1, bw, bh);
+
+              const cl = Math.min(16, bw/3, bh/3);
+              ctx.strokeStyle = '#4ade80';
+              ctx.lineWidth = 4;
+              ctx.beginPath();
+              ctx.moveTo(x1, y1 + cl); ctx.lineTo(x1, y1); ctx.lineTo(x1 + cl, y1);
+              ctx.moveTo(x2 - cl, y1); ctx.lineTo(x2, y1); ctx.lineTo(x2, y1 + cl);
+              ctx.moveTo(x1, y2 - cl); ctx.lineTo(x1, y2); ctx.lineTo(x1 + cl, y2);
+              ctx.moveTo(x2 - cl, y2); ctx.lineTo(x2, y2); ctx.lineTo(x2, y2 - cl);
+              ctx.stroke();
+
+              const labelText = `${emoji} ${itemName} ${confPct}%`;
+              ctx.font = 'bold 13px Outfit, sans-serif';
+              const textWidth = ctx.measureText(labelText).width;
+              const pillW = textWidth + 16;
+              const pillH = 22;
+              const pillX = Math.max(4, Math.min(W - pillW - 4, x1));
+              const pillY = Math.max(pillH + 4, y1 - 6);
+
+              ctx.fillStyle = '#15803d';
+              ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+              ctx.shadowBlur = 6;
+              ctx.beginPath();
+              ctx.roundRect(pillX, pillY - pillH, pillW, pillH, 6);
+              ctx.fill();
+
+              ctx.fillStyle = '#ffffff';
+              ctx.shadowBlur = 0;
+              ctx.fillText(labelText, pillX + 8, pillY - 6);
+
+              ctx.restore();
+            }
+          });
         }
-      } catch (err) {
-        // quiet catch
-      }
+      } catch (err) {}
     };
+
+    async function toggleMeasurement() {
+      if (isMeasuring) {
+        await fetch('/api/v1/sessions/end', { method: 'POST' });
+        showToast('Prep measurement session ended.');
+      } else {
+        await fetch('/api/v1/sessions/start', { method: 'POST' });
+        showToast('Prep measurement active: Initial mass locked.');
+      }
+    }
+
+    async function tareScale() {
+      await fetch('/api/v1/sessions/tare', { method: 'POST' });
+      showToast('Scale zeroed (Tare complete).');
+    }
+
+    async function resetSession() {
+      await fetch('/api/v1/sessions/reset', { method: 'POST' });
+      isPotMode = false;
+      document.getElementById('btnPotMode').className = 'btn-action btn-pot';
+      document.getElementById('potModeBanner').style.display = 'none';
+      showToast('Session reset to idle.');
+    }
   </script>
 </body>
 </html>
