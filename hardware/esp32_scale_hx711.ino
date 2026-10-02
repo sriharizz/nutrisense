@@ -18,7 +18,7 @@ const char* WIFI_SSID     = "vivo27";
 const char* WIFI_PASSWORD = "erenhari";
 
 // Laptop IP running server.py
-const char* SERVER_IP     = "10.126.26.230";
+const char* SERVER_IP     = "10.125.203.230";
 const int   SERVER_PORT   = 8000;
 
 // Pins

@@ -61,11 +61,15 @@ hw_state = HardwareTelemetryState()
 
 
 # 2. YOLO Model Initialization
+_V6_WEIGHTS = "nutrisense_model/v6/weights/best.pt"
 _V5_WEIGHTS = "nutrisense_model/v5/weights/best.pt"
 _V4_WEIGHTS = "nutrisense_model/v4/weights/best.pt"
 
 try:
-    if os.path.exists(_V5_WEIGHTS):
+    if os.path.exists(_V6_WEIGHTS):
+        model = YOLO(_V6_WEIGHTS)
+        print(f"[NutriSense] [OK] Loaded GPU-Trained V6 Carrot and Multi-Ingredient Model: {_V6_WEIGHTS}")
+    elif os.path.exists(_V5_WEIGHTS):
         model = YOLO(_V5_WEIGHTS)
         print(f"[NutriSense] [OK] Loaded Domain-Adapted V5 Model: {_V5_WEIGHTS}")
     elif os.path.exists(_V4_WEIGHTS):
@@ -153,7 +157,7 @@ scale_calibration_offset = 0.0
 last_cam_frame_bytes = b""
 last_cam_frame_time = 0.0
 
-def background_camera_worker(cam_ip: str = "10.126.26.171"):
+def background_camera_worker(cam_ip: str = "10.125.203.171"):
     global last_cam_frame_bytes, last_cam_frame_time
     # Force 1280x720 720p Full HD with ultra-low compression (Quality 6)
     try:
@@ -630,7 +634,7 @@ async def run_demo_simulation():
 
 # 5. Camera Streaming Proxies (Ultra-Fast RAM Buffer)
 @app.get("/api/v1/hardware/cam-proxy")
-def proxy_cam_frame(cam_ip: str = "10.126.26.171"):
+def proxy_cam_frame(cam_ip: str = "10.125.203.171"):
     global last_cam_frame_bytes
     if last_cam_frame_bytes:
         return Response(content=last_cam_frame_bytes, media_type="image/jpeg")
@@ -641,7 +645,7 @@ def proxy_cam_frame(cam_ip: str = "10.126.26.171"):
         return Response(content=b"", status_code=503)
 
 @app.get("/api/v1/hardware/cam-stream")
-def proxy_mjpeg_stream(cam_ip: str = "10.126.26.171"):
+def proxy_mjpeg_stream(cam_ip: str = "10.125.203.171"):
     def gen_frames():
         global last_cam_frame_bytes
         while True:
@@ -657,9 +661,9 @@ def proxy_mjpeg_stream(cam_ip: str = "10.126.26.171"):
 # ==========================================
 
 @app.get("/api/v1/profiles")
-def get_profiles():
-    profiles = database.get_all_family_profiles()
-    return {"profiles": profiles}
+def get_profiles(date: str = None):
+    data = database.get_all_family_profiles(target_date_str=date)
+    return data
 
 @app.post("/api/v1/profiles/select")
 def select_active_profile(data: dict):
@@ -691,7 +695,8 @@ def log_portion_to_profile(data: dict):
     pid = data.get("profile_id")
     if not pid:
         # Default to current active profile
-        profiles = database.get_all_family_profiles()
+        res_p = database.get_all_family_profiles()
+        profiles = res_p.get("profiles", []) if isinstance(res_p, dict) else res_p
         active = next((p for p in profiles if p.get("is_active")), profiles[0] if profiles else None)
         pid = active["profile_id"] if active else "prof_hari"
         
@@ -740,7 +745,8 @@ def get_pantry():
 
 @app.get("/api/v1/ai/recommendations")
 def get_ai_recommendations(profile_id: Optional[str] = None):
-    profiles = database.get_all_family_profiles()
+    res_p = database.get_all_family_profiles()
+    profiles = res_p.get("profiles", []) if isinstance(res_p, dict) else res_p
     active = next((p for p in profiles if p["profile_id"] == profile_id), None) if profile_id else next((p for p in profiles if p.get("is_active")), profiles[0] if profiles else None)
     
     if not active:
@@ -813,7 +819,8 @@ def ai_chat_endpoint(data: dict):
     person = data.get("person_name", "Hari")
     
     # Get person's today consumed
-    profiles = database.get_all_family_profiles()
+    res_p = database.get_all_family_profiles()
+    profiles = res_p.get("profiles", []) if isinstance(res_p, dict) else res_p
     active = next((p for p in profiles if person.lower() in p["name"].lower()), None)
     today_intake = active.get("today_consumed") if active else None
     pantry = database.get_pantry_inventory()

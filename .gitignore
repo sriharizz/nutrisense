@@ -12,3 +12,8 @@ dataset_v5*/
 .env
 *.db
 __pycache__/
+ 
+build/
+*.bin
+*.elf
+*.map

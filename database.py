@@ -302,15 +302,29 @@ if __name__ == "__main__":
 # Family Profiles & Smart Pantry Functions
 # ==========================================
 
-def get_all_family_profiles(db_path: str = "nutrisense.db"):
+def get_all_family_profiles(target_date_str: str = None, db_path: str = "nutrisense.db"):
+    import datetime, time
     conn = get_db_connection(db_path)
     cur = conn.cursor()
     cur.execute("SELECT * FROM family_profiles ORDER BY profile_id")
     rows = cur.fetchall()
     
-    # Calculate today's consumed for each profile
-    import time
-    start_of_day = time.time() - (time.time() % 86400)
+    # Determine target day bounds in local time
+    today_dt = datetime.date.today()
+    today_str = today_dt.isoformat()
+    
+    if not target_date_str:
+        target_date_str = today_str
+    
+    try:
+        target_dt = datetime.datetime.strptime(target_date_str, "%Y-%m-%d")
+    except Exception:
+        target_dt = datetime.datetime.combine(today_dt, datetime.time.min)
+        target_date_str = today_str
+
+    # Midnight to midnight timestamps
+    start_of_day = datetime.datetime(target_dt.year, target_dt.month, target_dt.day, 0, 0, 0).timestamp()
+    end_of_day = start_of_day + 86400
     
     profiles = []
     for r in rows:
@@ -322,8 +336,8 @@ def get_all_family_profiles(db_path: str = "nutrisense.db"):
                    COALESCE(SUM(fat), 0) as total_fat,
                    COALESCE(SUM(fiber), 0) as total_fiber
             FROM meal_intake_logs
-            WHERE profile_id = ? AND timestamp >= ?
-        """, (p["profile_id"], start_of_day))
+            WHERE profile_id = ? AND timestamp >= ? AND timestamp < ?
+        """, (p["profile_id"], start_of_day, end_of_day))
         stats = cur.fetchone()
         p["today_consumed"] = {
             "calories": round(stats["total_cal"], 1),
@@ -336,24 +350,77 @@ def get_all_family_profiles(db_path: str = "nutrisense.db"):
         cur.execute("""
             SELECT meal_name, portion_weight_g, calories, protein, carbs, fat, fiber, timestamp
             FROM meal_intake_logs
-            WHERE profile_id = ?
+            WHERE profile_id = ? AND timestamp >= ? AND timestamp < ?
             ORDER BY timestamp DESC
-            LIMIT 6
-        """, (p["profile_id"],))
-        recent_rows = cur.fetchall()
-        import datetime
-        p["recent_logs"] = [
-            {
-                "meal_name": r["meal_name"],
-                "portion_weight_g": round(r["portion_weight_g"], 1),
-                "calories": round(r["calories"], 1),
-                "time_str": datetime.datetime.fromtimestamp(r["timestamp"]).strftime("%I:%M %p").lstrip("0")
-            }
-            for r in recent_rows
-        ]
+        """, (p["profile_id"], start_of_day, end_of_day))
+        logs = cur.fetchall()
+        p["recent_logs"] = []
+        for l in logs:
+            ld = dict(l)
+            dt_log = datetime.datetime.fromtimestamp(ld["timestamp"])
+            ld["time_str"] = dt_log.strftime("%I:%M %p").lstrip("0")
+            ld["date_str"] = dt_log.strftime("%b %d")
+            p["recent_logs"].append(ld)
+            
         profiles.append(p)
+    
+    # 7-Day Calendar Streak Builder
+    calendar_days = []
+    streak_count = 0
+    
+    # Look back 6 days + today
+    for i in range(6, -1, -1):
+        day_date = today_dt - datetime.timedelta(days=i)
+        day_str = day_date.isoformat()
+        day_start = datetime.datetime(day_date.year, day_date.month, day_date.day, 0, 0, 0).timestamp()
+        day_end = day_start + 86400
+        
+        cur.execute("""
+            SELECT COUNT(*) as count, COALESCE(SUM(calories), 0) as cal
+            FROM meal_intake_logs
+            WHERE timestamp >= ? AND timestamp < ?
+        """, (day_start, day_end))
+        day_stat = cur.fetchone()
+        logged_count = day_stat["count"]
+        logged_cals = round(day_stat["cal"], 0)
+        
+        is_today = (day_str == today_str)
+        is_selected = (day_str == target_date_str)
+        has_logs = (logged_count > 0)
+        
+        calendar_days.append({
+            "date": day_str,
+            "day_name": day_date.strftime("%a"),
+            "day_num": day_date.strftime("%d"),
+            "is_today": is_today,
+            "is_selected": is_selected,
+            "has_logs": has_logs,
+            "logged_count": logged_count,
+            "calories": logged_cals
+        })
+        if has_logs:
+            streak_count += 1
+            
     conn.close()
-    return profiles
+    
+    # Formatted selected date header label
+    sel_dt = datetime.datetime.strptime(target_date_str, "%Y-%m-%d")
+    if target_date_str == today_str:
+        header_date_label = f"Today, {sel_dt.strftime('%b %d')}"
+    elif target_date_str == (today_dt - datetime.timedelta(days=1)).isoformat():
+        header_date_label = f"Yesterday, {sel_dt.strftime('%b %d')}"
+    else:
+        header_date_label = sel_dt.strftime("%A, %b %d")
+        
+    return {
+        "profiles": profiles,
+        "selected_date": target_date_str,
+        "selected_date_label": header_date_label,
+        "is_today": (target_date_str == today_str),
+        "streak_days": max(1, streak_count),
+        "calendar_days": calendar_days
+    }
+
 
 def set_active_profile(profile_id: str, db_path: str = "nutrisense.db"):
     conn = get_db_connection(db_path)

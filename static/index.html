@@ -851,27 +851,319 @@
        TAB 3: CLINICAL FAMILY METABOLIC HUB & INTERACTIVE AI CHAT
        ========================================================================== */
     .family-hub-container {
-      height: 100%;
-      padding: 0.75rem 1.25rem;
-      overflow-y: auto;
       display: flex;
       flex-direction: column;
       gap: 8px;
+      padding: 0 4px 6px 4px;
+      box-sizing: border-box;
     }
+    .family-header-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 0 4px 0;
+      border-bottom: 1.5px solid rgba(22, 163, 74, 0.12);
+      flex-shrink: 0;
+    }
+    .family-hub-cursive-title {
+      font-family: 'Caveat', cursive;
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: #15803d;
+      letter-spacing: 0.5px;
+      line-height: 1;
+      margin: 0;
+      text-shadow: 0 1px 2px rgba(22, 163, 74, 0.15);
+    }
+    .family-hub-subtitle {
+      font-size: 0.70rem;
+      color: #64748b;
+      font-weight: 500;
+      margin-top: -2px;
+    }
+
     .family-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 12px;
+      align-items: start;
     }
+    @media (max-width: 1100px) {
+      .family-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    /* POKER CARD STYLING - ULTRA COMPACT (REDUCED CARD LENGTH) */
     .family-profile-card {
       background: #ffffff;
       border: 1.5px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 10px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.02);
+      border-radius: 14px;
+      padding: 8px 12px; /* Compact padding */
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      justify-content: flex-start;
+      gap: 5px; /* Tight 5px gap between sections */
+      height: auto;
+      box-sizing: border-box;
+      position: relative;
+      cursor: default;
+      transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    }
+    .family-profile-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+      border-color: #cbd5e1;
+    }
+    .family-profile-card.dragging {
+      opacity: 0.35;
+      transform: scale(0.97);
+      border: 2px dashed #16a34a;
+      box-shadow: 0 12px 30px rgba(22, 163, 74, 0.15);
+    }
+    .family-profile-card.drag-over {
+      border: 2px solid #0284c7;
+      background: #f0f9ff;
+      transform: scale(1.02);
+    }
+    .card-drag-handle {
+      cursor: grab;
+      color: #94a3b8;
+      font-size: 0.85rem;
+      padding: 1px 3px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      user-select: none;
+      transition: color 0.15s ease, background 0.15s ease;
+    }
+    .card-drag-handle:hover {
+      color: #0f172a;
+      background: #e2e8f0;
+    }
+    .card-drag-handle:active {
+      cursor: grabbing;
+    }
+
+    /* NEAT AI CHAT BOTTOM CARD (PUSHED A LIL ABOVE) */
+    .ai-chat-bottom-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 8px 14px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 2px; /* Moved higher up */
+    }
+    .chat-persona-pills {
+      display: flex;
+      gap: 4px;
+      background: #f1f5f9;
+      padding: 2px;
+      border-radius: 8px;
+    }
+    .chat-persona-btn {
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: center;
+    }
+    .chat-persona-btn.active {
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+    }
+    .chat-chip {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .chat-chip:hover {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+      color: #065f46;
+      transform: translateY(-1px);
+    }
+    .chat-dialogue-window {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 8px 12px;
+      min-height: 48px;
+      max-height: 120px;
+      overflow-y: auto;
+      font-size: 0.72rem;
+      line-height: 1.4;
+    }
+    .clinical-gauge-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 7px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .clinical-gauge-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .macro-segmented-bar {
+      display: flex;
+      height: 6px;
+      border-radius: 3px;
+      overflow: hidden;
+      background: #f1f5f9;
+      margin: 2px 0;
+    }
+    .macro-seg-fib { background: #8b5cf6; }
+    .macro-seg-prot { background: #0284c7; }
+    .macro-seg-carb { background: #f59e0b; }
+    .macro-seg-fat { background: #ec4899; }
+    .vitality-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 0.64rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: #f0fdf4;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+    
+    /* ADD MEMBER MODAL STYLES */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-card {
+      background: #ffffff;
+      border-radius: 18px;
+      width: 440px;
+      max-width: 90vw;
+      padding: 18px;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border: 1px solid #e2e8f0;
+      transform: scale(0.95);
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .modal-overlay.active .modal-card {
+      transform: scale(1);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 8px;
+    }
+    .modal-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .modal-close-btn {
+      background: #f1f5f9;
+      border: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: 700;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-field {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .modal-label {
+      font-size: 0.70rem;
+      font-weight: 700;
+      color: #334155;
+    }
+    .modal-input {
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1.5px solid #cbd5e1;
+      font-size: 0.75rem;
+      outline: none;
+    }
+    .modal-input:focus {
+      border-color: #16a34a;
+    }
+    .portion-action-pill {
+      background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+      border: 1px solid #a7f3d0;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 0.72rem;
+      color: #065f46;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.4;
+    }
+    .portion-action-pill.warning-pill {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border: 1px solid #fde68a;
+      color: #92400e;
+    }
+    .meal-log-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px dashed #e2e8f0;
+      font-size: 0.72rem;
+    }
+    .meal-log-item:last-child {
+      border-bottom: none;
     }
     .profile-card-top {
       display: flex;
@@ -1144,6 +1436,92 @@
       pointer-events: none;
       z-index: 1000;
     }
+  
+    /* CALENDAR STREAK & DATE PICKER BAR */
+    .calendar-streak-bar {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 6px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+      margin-bottom: 6px;
+      gap: 10px;
+    }
+    .streak-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 10px;
+      padding: 4px 10px;
+    }
+    .streak-fire {
+      font-size: 1.2rem;
+      animation: pulseFire 1.5s infinite alternate ease-in-out;
+    }
+    @keyframes pulseFire {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.18); }
+    }
+    .calendar-days-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex: 1;
+      justify-content: center;
+    }
+    .calendar-day-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3px 8px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      cursor: pointer;
+      min-width: 44px;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .calendar-day-pill:hover {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+      transform: translateY(-2px);
+    }
+    .calendar-day-pill.active {
+      background: #15803d;
+      border-color: #15803d;
+      color: #ffffff !important;
+      box-shadow: 0 4px 10px rgba(21, 128, 61, 0.25);
+    }
+    .calendar-day-pill.active .cal-day-name,
+    .calendar-day-pill.active .cal-day-num,
+    .calendar-day-pill.active .cal-status-dot {
+      color: #ffffff !important;
+    }
+    .cal-day-name {
+      font-size: 0.58rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+    }
+    .cal-day-num {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.1;
+    }
+    .cal-status-dot {
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: #16a34a;
+      margin-top: 1px;
+    }
+
   </style>
 </head>
 <body>
@@ -1248,7 +1626,7 @@
           <div class="cam-wrapper">
             <canvas id="camCanvas" width="640" height="480"></canvas>
             <div class="cam-top-hud">
-              <span class="hud-pill">ESP32-CAM (10.126.26.171)</span>
+              <span class="hud-pill">ESP32-CAM (10.125.203.171)</span>
               <span id="hudScaleLoad" class="hud-pill hud-scale-pill">Scale: 0.0g</span>
             </div>
           </div>
@@ -1420,53 +1798,98 @@
 
     <!-- TAB 3: CLINICAL FAMILY METABOLIC HUB & INTERACTIVE AI CHAT -->
     <section id="tab-family" class="tab-pane family-hub-container">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
+      
+      <!-- TOP BANNER -->
+      <div class="family-header-banner">
         <div>
-          <div class="pane-title" style="font-size: 1.15rem;">👨‍👩‍👧 Family Metabolic Health & Clinical AI Hub</div>
-          <div style="font-size: 0.74rem; color: #64748b;">Daily Goals, Real-Time Intake Progress, and Friendly AI Nutritionist</div>
+          <div class="family-hub-cursive-title">👨‍👩‍👧 Family Metabolic Health & Clinical AI Hub</div>
+          <div class="family-hub-subtitle">Daily Goals, Real-Time Intake Progress & Friendly AI Nutritionist</div>
         </div>
-        <button class="btn-action btn-start" style="padding: 4px 12px; font-size: 0.74rem;" onclick="loadFamilyHub()">
-          🔄 Re-Analyze AI Profiles
-        </button>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <button class="btn-action" style="padding: 6px 10px; font-size: 0.72rem;" onclick="resetCardLayout()" title="Reset card ordering">
+            🔄 Reset Order
+          </button>
+          <button class="btn-action btn-start" style="padding: 6px 14px; font-size: 0.74rem; background: #0284c7; border-color: #0284c7;" onclick="openAddMemberModal()">
+            ➕ Add Member
+          </button>
+          <button class="btn-action btn-start" style="padding: 6px 14px; font-size: 0.74rem;" onclick="loadFamilyHub(currentSelectedDate)">
+            🔄 Refresh
+          </button>
+        </div>
       </div>
 
-      <!-- 3 PROFILE CARDS -->
+      <!-- 7-DAY CALENDAR STREAK & DATE SELECTOR BAR -->
+      <div class="calendar-streak-bar">
+        <div class="streak-badge">
+          <span class="streak-fire">🔥</span>
+          <div>
+            <div id="streakTitle" style="font-size: 0.74rem; font-weight: 800; color: #b45309;">4-Day Health Streak</div>
+            <div style="font-size: 0.58rem; color: #92400e; font-weight: 600;">Active Metabolic Tracking</div>
+          </div>
+        </div>
+        
+        <div class="calendar-days-row" id="calendarDaysRow">
+          <!-- Dynamically populated with 7-day clickable date pills -->
+        </div>
+
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 4px 10px; display: flex; align-items: center; gap: 6px;">
+          <span style="font-size: 0.85rem;">📅</span>
+          <span id="selectedDateLabel" style="font-size: 0.70rem; font-weight: 800; color: #166534;">Viewing Today</span>
+        </div>
+      </div>
+
+      <!-- 3 PROFILE CARDS (TOP ROW) -->
       <div class="family-grid" id="familyProfilesContainer">
         <!-- Dynamically populated by loadFamilyHub() -->
       </div>
 
-      <!-- INTERACTIVE GROQ AI DIETITIAN CHAT SECTION -->
-      <div class="ai-chat-card">
-        <div class="ai-chat-header">
-          <strong>💬 Ask NutriSense AI Nutritionist (Groq Powered)</strong>
-          <span style="font-size: 0.68rem; color: var(--primary-emerald); font-weight: 700;">⚡ Instant LPU Response</span>
+      <!-- NEAT AI CHAT SECTION (UNDER PROFILES) -->
+      <div class="ai-chat-bottom-card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <strong style="font-size: 0.88rem; color: #0f172a;">💬 Ask NutriSense AI Nutritionist</strong>
+            <span style="font-size: 0.65rem; color: #16a34a; font-weight: 800; background: #dcfce7; padding: 2px 7px; border-radius: 5px;">⚡ Groq LPU Powered</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 0.68rem; font-weight: 700; color: #64748b;">Member:</span>
+            <div class="chat-persona-pills">
+              <button id="personaBtnHari" class="chat-persona-btn active" onclick="selectChatPersona('Hari')">👤 Hari</button>
+              <button id="personaBtnDad" class="chat-persona-btn" onclick="selectChatPersona('Dad')">👨‍💼 Dad</button>
+              <button id="personaBtnMom" class="chat-persona-btn" onclick="selectChatPersona('Mom')">👩 Mom</button>
+            </div>
+            <input type="hidden" id="chatPersonSelect" value="Hari">
+          </div>
         </div>
 
-        <!-- QUICK CHIPS -->
-        <div class="chat-chips-row">
-          <span class="chat-chip" onclick="setChatQuestion('What should I eat for dinner based on what is in our pantry?')">🥗 What should I eat for dinner?</span>
-          <span class="chat-chip" onclick="setChatQuestion('How can Hari hit his daily protein goal today?')">💪 How to reach Hari's protein goal?</span>
-          <span class="chat-chip" onclick="setChatQuestion('What foods are best for Dad to keep blood sugar steady tonight?')">🩸 Best foods for Dad's blood sugar?</span>
-          <span class="chat-chip" onclick="setChatQuestion('Is Mom getting enough potassium and low salt today?')">❤️ Check Mom's heart & salt balance</span>
+        <!-- QUICK INSTANT PROMPT CHIPS -->
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <span class="chat-chip" onclick="setChatQuestion('What should I eat for dinner based on what is in our pantry?', 'Hari')">🥗 What should I eat for dinner?</span>
+          <span class="chat-chip" onclick="setChatQuestion('How can Hari hit his daily protein goal today?', 'Hari')">💪 How to reach Hari's protein goal?</span>
+          <span class="chat-chip" onclick="setChatQuestion('What foods are best for Dad to keep blood sugar steady tonight?', 'Dad')">🩸 Best foods for Dad's blood sugar?</span>
+          <span class="chat-chip" onclick="setChatQuestion('Is Mom getting enough potassium and low salt today?', 'Mom')">❤️ Check Mom's heart & salt balance</span>
         </div>
 
         <!-- INPUT ROW -->
-        <div class="chat-input-row">
-          <select id="chatPersonSelect" class="chat-select">
-            <option value="Hari">👤 Hari (Me)</option>
-            <option value="Mom">👩 Mom</option>
-            <option value="Dad">👨‍💼 Dad</option>
-          </select>
-          <input type="text" id="chatInputText" class="chat-input" placeholder="Type your nutrition question (e.g. What should I add to my lunch?)..." onkeypress="if(event.key==='Enter') sendAiChat()">
-          <button class="btn-action btn-start" style="padding: 0 16px; white-space: nowrap;" onclick="sendAiChat()">Ask AI ➔</button>
+        <div style="display: flex; gap: 6px;">
+          <input type="text" id="chatInputText" class="chat-input" style="flex: 1; font-size: 0.74rem; padding: 6px 12px; border-radius: 8px; border: 1.5px solid #cbd5e1;" placeholder="Ask clinical nutrition question (e.g. What healthy meal can I make from our fresh carrots and cucumbers?)..." onkeypress="if(event.key==='Enter') sendAiChat()">
+          <button class="btn-action btn-start" style="padding: 0 16px; font-size: 0.74rem; white-space: nowrap; border-radius: 8px;" onclick="sendAiChat()">Ask AI ➔</button>
         </div>
 
-        <!-- REPLY BUBBLE -->
-        <div id="chatReplyBubble" class="chat-reply-bubble">
-          <strong id="chatReplyAuthor" style="color: var(--primary-dark-forest); display: block; margin-bottom: 2px;">🤖 NutriSense Nutritionist:</strong>
-          <span id="chatReplyContent"></span>
+        <!-- DIALOGUE / REPLY BUBBLE -->
+        <div id="chatDialogueBox" class="chat-dialogue-window">
+          <div id="chatReplyEmpty" style="color: #94a3b8; font-size: 0.70rem;">
+            💡 Click any question chip above or type your nutrition query to get instant Groq AI guidance.
+          </div>
+          <div id="chatReplyBubble" style="display: none;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+              <strong id="chatReplyAuthor" style="color: #166534; font-size: 0.72rem;">🤖 NutriSense AI for Hari:</strong>
+              <span style="font-size: 0.60rem; color: #94a3b8;">Just now</span>
+            </div>
+            <div id="chatReplyContent" style="color: #1e293b; font-size: 0.72rem; line-height: 1.4;"></div>
+          </div>
         </div>
       </div>
+
     </section>
 
     <!-- TAB 4: SMART PANTRY (GROQ ZERO-WASTE AI CHEF & LIVE INVENTORY) -->
@@ -1505,7 +1928,7 @@
   <div id="toastMessage">Action recorded</div>
 
   <script>
-    const camIp = '10.126.26.171';
+    const camIp = '10.125.203.171';
     let isMeasuring = false;
     let latestZones = [];
     let isPotMode = false;
@@ -1691,12 +2114,54 @@
     }
 
     // LOAD FAMILY HEALTH PROFILES WITH CONCENTRIC SVG RINGS & SIMPLE AI VERDICTS
-    async function loadFamilyHub() {
+    
+    let currentSelectedDate = null;
+
+    function selectCalendarDate(dateStr) {
+      currentSelectedDate = dateStr;
+      loadFamilyHub(dateStr);
+    }
+
+    async function loadFamilyHub(targetDate = null) {
       try {
-        const res = await fetch('/api/v1/profiles');
+        let url = '/api/v1/profiles';
+        if (targetDate) {
+          url += '?date=' + encodeURIComponent(targetDate);
+        }
+        const res = await fetch(url);
         if (res.ok) {
           const data = await res.json();
           const profiles = data.profiles || [];
+          currentSelectedDate = data.selected_date;
+          
+          // 1. Render Streak & Calendar Days Row
+          const streakTitle = document.getElementById('streakTitle');
+          if (streakTitle) {
+            streakTitle.textContent = `${data.streak_days || 1}-Day Metabolic Streak`;
+          }
+          
+          const selDateLabel = document.getElementById('selectedDateLabel');
+          if (selDateLabel) {
+            selDateLabel.textContent = data.selected_date_label || 'Viewing Today';
+          }
+
+          const calDaysRow = document.getElementById('calendarDaysRow');
+          if (calDaysRow && data.calendar_days) {
+            calDaysRow.innerHTML = data.calendar_days.map(d => {
+              const activeClass = d.is_selected ? 'active' : '';
+              const todayTag = d.is_today ? ' (Today)' : '';
+              const statusText = d.has_logs ? '🟢 Logged' : (d.is_today ? '⭐ Today' : '⚪ Rest');
+              return `
+                <div class="calendar-day-pill ${activeClass}" onclick="selectCalendarDate('${d.date}')" title="${d.date}${todayTag}: ${d.has_logs ? d.logged_count + ' meals (' + d.calories + ' kcal)' : 'No meals logged'}">
+                  <span class="cal-day-name">${d.day_name}</span>
+                  <span class="cal-day-num">${d.day_num}</span>
+                  <span class="cal-status-dot">${statusText}</span>
+                </div>
+              `;
+            }).join('');
+          }
+
+          // 2. Render 3 Profile Cards (Clean 0% state when 0g, filled with colors when logged)
           const container = document.getElementById('familyProfilesContainer');
           
           container.innerHTML = profiles.map(p => {
@@ -1704,47 +2169,184 @@
             const pKey = p.name.toLowerCase().includes('hari') ? 'hari' : (p.name.toLowerCase().includes('mom') ? 'mom' : 'dad');
             const meta = PERSONA_METADATA[pKey] || { badge: 'Balanced Diet', class: 'badge-hari', avatar: '👤' };
 
-            const calPct = Math.min(1.0, (consumed.calories / p.target_calories) || 0.05);
-            const protPct = Math.min(1.0, (consumed.protein_g / p.target_protein) || 0.05);
-            const fibPct = Math.min(1.0, (consumed.fiber_g / (p.target_fiber || 30)) || 0.05);
+            // EXACT ZERO FRACTIONS WHEN NOTHING CONSUMED (NO ARCS / 0% WHEN 0g)
+            const calPct = p.target_calories > 0 ? Math.min(1.0, consumed.calories / p.target_calories) : 0.0;
+            const protPct = p.target_protein > 0 ? Math.min(1.0, consumed.protein_g / p.target_protein) : 0.0;
+            const fibPct = (p.target_fiber || 30) > 0 ? Math.min(1.0, consumed.fiber_g / (p.target_fiber || 30)) : 0.0;
 
             const cCal = 175.9; const offCal = cCal * (1 - calPct);
             const cProt = 131.9; const offProt = cProt * (1 - protPct);
             const cFib = 87.9; const offFib = cFib * (1 - fibPct);
 
             const logs = p.recent_logs || [];
+            const totalMacroGrams = consumed.protein_g + consumed.carbs_g + consumed.fat_g + consumed.fiber_g;
 
-            let simpleAiBenefit = '';
-            let simpleTip = '';
-            if (pKey === 'dad') {
-              simpleAiBenefit = 'Keeps blood sugar steady after meals without sudden spikes.';
-              simpleTip = 'Vegetable fiber slows down sugar absorption naturally.';
-            } else if (pKey === 'mom') {
-              simpleAiBenefit = 'Low in salt and high in potassium to keep blood pressure healthy.';
-              simpleTip = 'Tomatoes and cucumbers are naturally heart-friendly.';
+            // MACRO BAR: Clean empty white bar when 0g, dynamically filled with colors when logged
+            let macroBarHtml = '';
+            if (totalMacroGrams > 0) {
+              const fibBarPct = Math.round((consumed.fiber_g / totalMacroGrams) * 100);
+              const protBarPct = Math.round((consumed.protein_g / totalMacroGrams) * 100);
+              const carbBarPct = Math.round((consumed.carbs_g / totalMacroGrams) * 100);
+              const fatBarPct = Math.max(0, 100 - (fibBarPct + protBarPct + carbBarPct));
+
+              macroBarHtml = `
+                <div>
+                  <div style="display: flex; justify-content: space-between; font-size: 0.62rem; font-weight: 700; color: #166534; margin-bottom: 1px;">
+                    <span>Diet Macro Balance:</span>
+                    <span>${protBarPct}% Prot • ${fibBarPct}% Fib • ${carbBarPct}% Carb</span>
+                  </div>
+                  <div class="macro-segmented-bar" style="height: 6px; margin: 2px 0; display: flex; border-radius: 3px; overflow: hidden; background: #e2e8f0;">
+                    <div class="macro-seg-prot" style="width: ${protBarPct}%; background: #0284c7;" title="Protein: ${consumed.protein_g}g (${protBarPct}%)"></div>
+                    <div class="macro-seg-fib" style="width: ${fibBarPct}%; background: #8b5cf6;" title="Fiber: ${consumed.fiber_g}g (${fibBarPct}%)"></div>
+                    <div class="macro-seg-carb" style="width: ${carbBarPct}%; background: #f59e0b;" title="Carbs: ${consumed.carbs_g}g (${carbBarPct}%)"></div>
+                    <div class="macro-seg-fat" style="width: ${fatBarPct}%; background: #ec4899;" title="Fats: ${consumed.fat_g}g (${fatBarPct}%)"></div>
+                  </div>
+                </div>
+              `;
             } else {
-              simpleAiBenefit = 'Provides clean energy and helps your muscles recover from workouts.';
-              simpleTip = 'Add 3 - 4 eggs or paneer to easily reach your 75g protein goal.';
+              macroBarHtml = `
+                <div>
+                  <div style="display: flex; justify-content: space-between; font-size: 0.62rem; font-weight: 700; color: #94a3b8; margin-bottom: 1px;">
+                    <span>Diet Macro Balance:</span>
+                    <span>Awaiting 1st Meal (0g)</span>
+                  </div>
+                  <div class="macro-segmented-bar" style="height: 6px; margin: 2px 0; background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 3px;">
+                    <!-- Clean white empty track -->
+                  </div>
+                </div>
+              `;
             }
+
+            let clinicalGaugeHtml = '';
+            let actionPillHtml = '';
+            let vitalityHtml = '';
+
+            if (pKey === 'dad') {
+              const netCarbs = Math.max(0, consumed.carbs_g - consumed.fiber_g).toFixed(1);
+              const fiberRatio = consumed.carbs_g > 0 ? Math.round((consumed.fiber_g / consumed.carbs_g) * 100) : 0;
+              const spikeRisk = totalMacroGrams === 0 ? '🟢 Steady Glucose' : (fiberRatio > 18 ? '🟢 Low Spike Risk' : (fiberRatio > 10 ? '🟡 Moderate' : '🔴 High'));
+              const spikeColor = totalMacroGrams === 0 ? '#16a34a' : (fiberRatio > 18 ? '#16a34a' : (fiberRatio > 10 ? '#d97706' : '#dc2626'));
+              const cushionText = totalMacroGrams === 0 ? '0.0g Net Carbs' : `${fiberRatio}% Fiber Cushion`;
+
+              clinicalGaugeHtml = `
+                <div class="clinical-gauge-box">
+                  <div class="clinical-gauge-header">
+                    <span style="color: #475569;">🩸 Glycemic Spike Index:</span>
+                    <span style="color: ${spikeColor}; font-weight: 800;">${spikeRisk}</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; font-size: 0.68rem; margin-top: 1px;">
+                    <span>Net Glucose: <strong>${netCarbs}g</strong></span>
+                    <span style="color: #166534; font-weight: 700;">${cushionText}</span>
+                  </div>
+                  <div style="background: #ffffff; border: 1px solid #e2e8f0; height: 5px; border-radius: 3px; overflow: hidden; margin-top: 2px;">
+                    <div style="background: #16a34a; width: ${totalMacroGrams === 0 ? 0 : Math.min(100, fiberRatio * 3)}%; height: 100%; transition: width 0.3s ease;"></div>
+                  </div>
+                </div>
+              `;
+
+              actionPillHtml = `
+                <div class="portion-action-pill" style="padding: 4px 6px; font-size: 0.65rem; background: #f0fdf4; border: 1px solid #a7f3d0; border-radius: 8px; color: #065f46; display: flex; gap: 5px; align-items: flex-start; line-height: 1.3;">
+                  <span>💡</span>
+                  <div><strong>Glucose Protection:</strong> Raw veggie fiber slows carb absorption. Keep dinner net carbs <45g.</div>
+                </div>
+              `;
+
+              vitalityHtml = `
+                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                  <span class="vitality-badge">🥕 Beta-Carotene</span>
+                  <span class="vitality-badge" style="background: #eff6ff; color: #1e40af; border-color: #bfdbfe;">✨ Low GI</span>
+                </div>
+              `;
+            } else if (pKey === 'hari') {
+              const remainingProt = Math.max(0, p.target_protein - consumed.protein_g).toFixed(1);
+              const paceStatus = totalMacroGrams === 0 ? '⚡ Ready for Intake' : (consumed.protein_g > 30 ? '🟢 On Pace' : '⚡ Boost Needed');
+              const paceColor = consumed.protein_g > 30 ? '#16a34a' : '#d97706';
+              const protFillPct = p.target_protein > 0 ? (consumed.protein_g / p.target_protein) * 100 : 0;
+
+              clinicalGaugeHtml = `
+                <div class="clinical-gauge-box">
+                  <div class="clinical-gauge-header">
+                    <span style="color: #475569;">💪 Protein Recovery Target:</span>
+                    <span style="color: ${paceColor}; font-weight: 800;">${paceStatus}</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; font-size: 0.68rem; margin-top: 1px;">
+                    <span>Intake: <strong>${consumed.protein_g.toFixed(1)}g</strong> / ${p.target_protein}g</span>
+                    <span style="color: #0284c7; font-weight: 700;">${remainingProt}g Gap</span>
+                  </div>
+                  <div style="background: #ffffff; border: 1px solid #e2e8f0; height: 5px; border-radius: 3px; overflow: hidden; margin-top: 2px;">
+                    <div style="background: #0284c7; width: ${Math.min(100, protFillPct)}%; height: 100%; transition: width 0.3s ease;"></div>
+                  </div>
+                </div>
+              `;
+
+              actionPillHtml = `
+                <div class="portion-action-pill" style="padding: 4px 6px; font-size: 0.65rem; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; color: #92400e; display: flex; gap: 5px; align-items: flex-start; line-height: 1.3;">
+                  <span>⚡</span>
+                  <div><strong>Dinner Advice:</strong> ${remainingProt}g protein gap. Add 3 - 4 boiled eggs or 100g paneer.</div>
+                </div>
+              `;
+
+              vitalityHtml = `
+                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                  <span class="vitality-badge">💪 Muscle Synthesis</span>
+                  <span class="vitality-badge" style="background: #fdf2f8; color: #9d174d; border-color: #fbcfe8;">⚡ Electrolytes</span>
+                </div>
+              `;
+            } else {
+              clinicalGaugeHtml = `
+                <div class="clinical-gauge-box">
+                  <div class="clinical-gauge-header">
+                    <span style="color: #475569;">❤️ Cardio & Salt Balance:</span>
+                    <span style="color: #16a34a; font-weight: 800;">🟢 Optimal</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; font-size: 0.68rem; margin-top: 1px;">
+                    <span>Potassium-to-Sodium:</span>
+                    <span style="color: #16a34a; font-weight: 700;">High Plant K+ 🌿</span>
+                  </div>
+                  <div style="background: #ffffff; border: 1px solid #e2e8f0; height: 5px; border-radius: 3px; overflow: hidden; margin-top: 2px;">
+                    <div style="background: #10b981; width: ${totalMacroGrams === 0 ? 0 : 88}%; height: 100%; transition: width 0.3s ease;"></div>
+                  </div>
+                </div>
+              `;
+
+              actionPillHtml = `
+                <div class="portion-action-pill" style="padding: 4px 6px; font-size: 0.65rem; background: #f0fdf4; border: 1px solid #a7f3d0; border-radius: 8px; color: #065f46; display: flex; gap: 5px; align-items: flex-start; line-height: 1.3;">
+                  <span>💚</span>
+                  <div><strong>Heart-Safe Meal:</strong> Plant potassium naturally relaxes blood vessels and regulates BP.</div>
+                </div>
+              `;
+
+              vitalityHtml = `
+                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                  <span class="vitality-badge">🍅 Lycopene Boost</span>
+                  <span class="vitality-badge" style="background: #ecfeff; color: #155e75; border-color: #a5f3fc;">🫀 Cardio Support</span>
+                </div>
+              `;
+            }
+
+            const intakeHeaderLabel = data.is_today ? "🕒 Today's Intakes:" : `🕒 Intakes on ${data.selected_date_label}:`;
 
             return `
               <div class="family-profile-card">
-                <div class="profile-card-top">
-                  <div style="display: flex; align-items: center; gap: 8px;">
-                    <span style="font-size: 1.5rem;">${meta.avatar}</span>
+                
+                <!-- TOP HEADER -->
+                <div class="profile-card-top" style="display: flex; justify-content: space-between; align-items: center;">
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <span class="card-drag-handle" title="Drag to reorder card">⋮⋮</span>
+                    <span style="font-size: 1.35rem;">${meta.avatar}</span>
                     <div>
-                      <div class="profile-name">${p.name}</div>
-                      <span class="persona-badge ${meta.class}">${meta.badge}</span>
+                      <div class="profile-name" style="font-size: 0.90rem; font-weight: 800; line-height: 1.1; color: #0f172a;">${p.name} <span style="font-size: 0.70rem; color: #94a3b8; font-weight: 500;">(${p.age}y)</span></div>
+                      <span class="persona-badge ${meta.class}" style="font-size: 0.60rem; padding: 1px 6px;">${meta.badge}</span>
                     </div>
                   </div>
-                  <span style="font-size: 0.72rem; font-weight: 800; color: #16a34a; background: #dcfce7; padding: 2px 8px; border-radius: 6px;">
+                  <span style="font-size: 0.67rem; font-weight: 800; color: ${calPct > 0 ? '#16a34a' : '#64748b'}; background: ${calPct > 0 ? '#dcfce7' : '#f1f5f9'}; padding: 2px 7px; border-radius: 6px;">
                     ${Math.round(calPct * 100)}% Met
                   </span>
                 </div>
 
-                <!-- Triple Concentric Rings & Legend -->
-                <div class="rings-wrapper">
-                  <svg class="concentric-svg" viewBox="0 0 72 72">
+                <!-- RINGS + MACROS COMPACT & SNUG -->
+                <div class="rings-wrapper" style="background: #f8fafc; border: 1px solid #f1f5f9; border-radius: 10px; padding: 6px 10px; display: flex; align-items: center; gap: 10px;">
+                  <svg class="concentric-svg" viewBox="0 0 72 72" style="width: 44px; height: 44px; min-width: 44px;">
                     <circle class="ring-bg" cx="36" cy="36" r="28"></circle>
                     <circle class="ring-bg" cx="36" cy="36" r="21"></circle>
                     <circle class="ring-bg" cx="36" cy="36" r="14"></circle>
@@ -1753,96 +2355,67 @@
                     <circle class="ring-fib" cx="36" cy="36" r="14" stroke-dasharray="87.9" stroke-dashoffset="${offFib}"></circle>
                   </svg>
 
-                  <div class="rings-legend">
-                    <div class="legend-row">
-                      <span style="color: #16a34a; font-weight: 700;">🟢 Calories:</span>
-                      <strong>${consumed.calories.toFixed(0)} / ${p.target_calories} kcal</strong>
+                  <div class="rings-legend" style="flex: 1; display: flex; flex-direction: column; gap: 2px; font-size: 0.68rem;">
+                    <div class="legend-row" style="display: flex; justify-content: space-between;">
+                      <span style="color: #16a34a; font-weight: 700;">🟢 Cal:</span>
+                      <strong>${consumed.calories.toFixed(0)} / ${p.target_calories}</strong>
                     </div>
-                    <div class="legend-row">
-                      <span style="color: #0284c7; font-weight: 700;">🔵 Protein:</span>
+                    <div class="legend-row" style="display: flex; justify-content: space-between;">
+                      <span style="color: #0284c7; font-weight: 700;">🔵 Prot:</span>
                       <strong>${consumed.protein_g.toFixed(1)} / ${p.target_protein}g</strong>
                     </div>
-                    <div class="legend-row">
-                      <span style="color: #8b5cf6; font-weight: 700;">🟣 Fiber:</span>
+                    <div class="legend-row" style="display: flex; justify-content: space-between;">
+                      <span style="color: #8b5cf6; font-weight: 700;">🟣 Fib:</span>
                       <strong>${consumed.fiber_g.toFixed(1)} / ${p.target_fiber || 30}g</strong>
                     </div>
                   </div>
                 </div>
 
-                <!-- Super Simple AI Nutrition Benefit -->
-                <div class="ai-verdict-box">
-                  <div class="ai-verdict-header">
-                    <span>💡 WHY THIS MEAL HELPS:</span>
-                    <span>GOAL ALIGNED</span>
-                  </div>
-                  <div style="font-weight: 700; color: #0f172a; margin-bottom: 2px;">${simpleAiBenefit}</div>
-                  <div style="font-size: 0.68rem; color: #166534;">Tip: ${simpleTip}</div>
-                </div>
+                <!-- MACRO DISTRIBUTION BAR -->
+                ${macroBarHtml}
 
-                <!-- Meal Intake Logs -->
-                <div>
-                  <div style="font-size: 0.7rem; font-weight: 800; color: #334155; margin-bottom: 2px;">Today's Meal Intakes:</div>
-                  <div class="meal-history-list">
-                    ${logs.length === 0 ? '<span style="color: #94a3b8; text-align: center; padding: 2px 0;">No meals logged yet today.</span>' : 
-                      logs.map(l => `
-                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #e2e8f0; padding: 3px 0;">
-                          <div style="display: flex; align-items: center; gap: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                            <span>🥗</span>
-                            <span style="font-weight: 700; color: #1e293b;">${l.meal_name || 'Portion'}</span>
-                            <span style="font-size: 0.64rem; color: #64748b;">(${l.portion_weight_g || 0}g${l.time_str ? ' • ' + l.time_str : ''})</span>
+                <!-- CLINICAL INTELLIGENCE GAUGE -->
+                ${clinicalGaugeHtml}
+
+                <!-- ACTIONABLE NEXT STEP -->
+                ${actionPillHtml}
+
+                <!-- VITALITY TAGS -->
+                ${vitalityHtml}
+
+                <!-- COMPACT LOGS TIMELINE -->
+                <div style="background: #ffffff; border: 1px solid #f1f5f9; border-radius: 8px; padding: 4px 6px;">
+                  <div style="display: flex; justify-content: space-between; font-size: 0.63rem; font-weight: 800; color: #475569; margin-bottom: 2px;">
+                    <span>${intakeHeaderLabel}</span>
+                    <span style="color: #94a3b8;">${logs.length} logged</span>
+                  </div>
+                  <div class="meal-history-list" style="max-height: 38px; overflow-y: auto;">
+                    ${logs.length === 0 ? '<div style="color: #94a3b8; text-align: center; padding: 1px 0; font-size: 0.63rem;">No meals logged for this day.</div>' : 
+                      logs.slice(0, 3).map(l => `
+                        <div class="meal-log-item" style="padding: 1px 0; font-size: 0.63rem; display: flex; justify-content: space-between; border-bottom: 1px dashed #f1f5f9;">
+                          <div style="display: flex; align-items: center; gap: 4px;">
+                            <span style="background: #f1f5f9; color: #475569; font-weight: 700; font-size: 0.56rem; padding: 1px 4px; border-radius: 3px;">${l.time_str || 'Today'}</span>
+                            <span style="font-weight: 600; color: #1e293b; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${l.meal_name}</span>
                           </div>
-                          <strong style="color: #16a34a; font-size: 0.72rem; white-space: nowrap; margin-left: 6px;">${l.calories || 0} kcal</strong>
+                          <strong style="color: #16a34a; font-size: 0.63rem;">${l.calories.toFixed(0)} kcal</strong>
                         </div>
                       `).join('')
                     }
                   </div>
                 </div>
+
+                <span class="resize-hint-grip" title="Drag to resize">⤡</span>
               </div>
             `;
           }).join('');
+
+          initCardDragAndDrop();
         }
-      } catch (e) {}
-    }
-
-    // AI CHAT HELPERS
-    function setChatQuestion(q) {
-      document.getElementById('chatInputText').value = q;
-      sendAiChat();
-    }
-
-    async function sendAiChat() {
-      const input = document.getElementById('chatInputText');
-      const q = input.value.trim();
-      if (!q) return;
-
-      const person = document.getElementById('chatPersonSelect').value;
-      const bubble = document.getElementById('chatReplyBubble');
-      const replyAuthor = document.getElementById('chatReplyAuthor');
-      const replyContent = document.getElementById('chatReplyContent');
-
-      bubble.style.display = 'block';
-      replyAuthor.textContent = `🤖 NutriSense AI for ${person}:`;
-      replyContent.textContent = 'Thinking with Groq LPU...';
-
-      try {
-        const res = await fetch('/api/v1/ai/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ question: q, person_name: person })
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          replyContent.textContent = data.reply || 'Here is a healthy recipe idea!';
-        } else {
-          replyContent.textContent = 'Based on your profile, pairing your salad with a lean protein source like 3 - 4 boiled eggs or lentils will balance your energy perfectly!';
-        }
-      } catch (e) {
-        replyContent.textContent = 'Adding a handful of roasted nuts or a boiled egg with your vegetables will help hit your daily energy targets!';
+      } catch (err) {
+        console.error("Error loading family profiles:", err);
       }
     }
 
-    // LOAD SMART PANTRY
     async function loadSmartPantry() {
       try {
         const res = await fetch('/api/v1/pantry');
@@ -1878,9 +2451,13 @@
                   <span>Threshold: ${it.threshold_g}g</span>
                   <span style="color: #15803d; font-weight: 700;">Live Auto-Deducted</span>
                 </div>
+              <span class="resize-hint-grip" title="Drag to resize">⤡</span>
               </div>
             `;
           }).join('');
+
+          // Initialize drag & drop reordering listeners
+          initCardDragAndDrop();
         }
       } catch (e) {}
     }
@@ -2170,6 +2747,293 @@
       document.getElementById('potModeBanner').style.display = 'none';
       showToast('Session reset to idle.');
     }
+  
+    // PERSONA SELECTOR FOR CHAT
+    function selectChatPersona(persona) {
+      document.getElementById('chatPersonSelect').value = persona;
+      ['Hari', 'Dad', 'Mom'].forEach(p => {
+        const btn = document.getElementById('personaBtn' + p);
+        if (btn) {
+          if (p === persona) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+      });
+    }
+
+    // CLICK PRE-MADE QUESTION
+    function setChatQuestion(q, persona) {
+      if (persona) {
+        selectChatPersona(persona);
+      }
+      const input = document.getElementById('chatInputText');
+      if (input) {
+        input.value = q;
+      }
+      sendAiChat();
+    }
+
+    // SEND AI CHAT TO GROQ BACKEND
+    async function sendAiChat() {
+      const input = document.getElementById('chatInputText');
+      if (!input) return;
+      const q = input.value.trim();
+      if (!q) return;
+
+      const person = document.getElementById('chatPersonSelect').value || 'Hari';
+      const emptyMsg = document.getElementById('chatReplyEmpty');
+      const bubble = document.getElementById('chatReplyBubble');
+      const replyAuthor = document.getElementById('chatReplyAuthor');
+      const replyContent = document.getElementById('chatReplyContent');
+
+      if (emptyMsg) emptyMsg.style.display = 'none';
+      if (bubble) bubble.style.display = 'block';
+      if (replyAuthor) replyAuthor.textContent = `🤖 NutriSense AI for ${person}:`;
+      if (replyContent) replyContent.innerHTML = '<span style="color: #64748b;">⚡ Analyzing clinical nutrition with Groq LPU...</span>';
+
+      try {
+        const res = await fetch('/api/v1/ai/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: q, person_name: person })
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          let replyText = data.reply || 'Here is a healthy recipe idea!';
+          // Format markdown bold
+          replyText = replyText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+          if (replyContent) replyContent.innerHTML = replyText;
+        } else {
+          if (replyContent) replyContent.innerHTML = 'Based on your profile, pairing your salad with a lean protein source like boiled eggs or lentils will balance your daily energy targets!';
+        }
+      } catch (e) {
+        if (replyContent) replyContent.innerHTML = 'Adding a handful of roasted nuts or a boiled egg with your vegetables will help hit your daily energy targets!';
+      }
+    }
+
+  
+    function openAddMemberModal() {
+      const m = document.getElementById('addMemberModal');
+      if (m) m.classList.add('active');
+    }
+
+    function closeAddMemberModal() {
+      const m = document.getElementById('addMemberModal');
+      if (m) m.classList.remove('active');
+    }
+
+    async function submitNewMember() {
+      const name = document.getElementById('newMemberName').value.trim();
+      if (!name) {
+        alert('Please enter a member name');
+        return;
+      }
+      const avatar = document.getElementById('newMemberAvatar').value;
+      const age = parseInt(document.getElementById('newMemberAge').value) || 25;
+      const target_calories = parseFloat(document.getElementById('newMemberCal').value) || 2000;
+      const target_protein = parseFloat(document.getElementById('newMemberProt').value) || 65;
+      const target_fiber = parseFloat(document.getElementById('newMemberFib').value) || 28;
+      const badge = document.getElementById('newMemberBadge').value;
+
+      try {
+        const res = await fetch('/api/v1/profiles/add', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: name,
+            avatar: avatar,
+            age: age,
+            target_calories: target_calories,
+            target_protein: target_protein,
+            target_carbs: 220.0,
+            target_fat: 45.0,
+            target_fiber: target_fiber,
+            persona_badge: badge
+          })
+        });
+
+        if (res.ok) {
+          closeAddMemberModal();
+          showToast('✅ Added ' + name + ' to Family Health Hub!');
+          loadFamilyHub();
+        } else {
+          showToast('⚠️ Could not save member profile');
+        }
+      } catch (e) {
+        showToast('⚠️ Error adding member');
+      }
+    }
+
+  
+    // ==========================================
+    // MOVABLE (DRAG & DROP) & RESIZABLE CARDS
+    // ==========================================
+    let draggedCard = null;
+
+    function initCardDragAndDrop() {
+      const container = document.getElementById('familyProfilesContainer');
+      if (!container) return;
+
+      const cards = container.querySelectorAll('.family-profile-card');
+      cards.forEach(card => {
+        card.setAttribute('draggable', 'true');
+
+        card.addEventListener('dragstart', (e) => {
+          draggedCard = card;
+          card.classList.add('dragging');
+          e.dataTransfer.effectAllowed = 'move';
+          try {
+            e.dataTransfer.setData('text/html', card.innerHTML);
+          } catch(err){}
+        });
+
+        card.addEventListener('dragend', () => {
+          if (draggedCard) {
+            draggedCard.classList.remove('dragging');
+            draggedCard = null;
+          }
+          cards.forEach(c => c.classList.remove('drag-over'));
+        });
+
+        card.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+          if (card !== draggedCard) {
+            card.classList.add('drag-over');
+          }
+        });
+
+        card.addEventListener('dragleave', () => {
+          card.classList.remove('drag-over');
+        });
+
+        card.addEventListener('drop', (e) => {
+          e.preventDefault();
+          card.classList.remove('drag-over');
+          if (draggedCard && card !== draggedCard) {
+            const allCards = Array.from(container.querySelectorAll('.family-profile-card'));
+            const draggedIdx = allCards.indexOf(draggedCard);
+            const targetIdx = allCards.indexOf(card);
+
+            if (draggedIdx < targetIdx) {
+              card.after(draggedCard);
+            } else {
+              card.before(draggedCard);
+            }
+            showToast('✅ Reordered cards!');
+          }
+        });
+      });
+    }
+
+    function resetCardLayout() {
+      const container = document.getElementById('familyProfilesContainer');
+      if (!container) return;
+      const cards = container.querySelectorAll('.family-profile-card');
+      cards.forEach(c => {
+        c.style.width = '';
+        c.style.height = '';
+      });
+      loadFamilyHub();
+      showToast('🔄 Card layout & sizes reset to default!');
+    }
+
+  
+    function toggleCardWide(btn) {
+      const card = btn.closest('.family-profile-card');
+      if (card) {
+        card.classList.toggle('card-wide');
+        if (card.classList.contains('card-wide')) {
+          btn.textContent = 'Normal';
+          btn.style.background = '#dbeafe';
+          btn.style.color = '#1e40af';
+        } else {
+          btn.textContent = 'Wider';
+          btn.style.background = '';
+          btn.style.color = '';
+        }
+      }
+    }
+
+    function toggleCardDown(btn) {
+      const card = btn.closest('.family-profile-card');
+      if (card) {
+        card.classList.toggle('card-pushed-down');
+        if (card.classList.contains('card-pushed-down')) {
+          btn.textContent = 'Lift Up';
+          btn.style.background = '#fef3c7';
+          btn.style.color = '#92400e';
+        } else {
+          btn.textContent = 'Push Down';
+          btn.style.background = '';
+          btn.style.color = '';
+        }
+      }
+    }
+
   </script>
+
+  <!-- ADD FAMILY MEMBER MODAL -->
+  <div id="addMemberModal" class="modal-overlay" onclick="if(event.target===this) closeAddMemberModal()">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">➕ Add Family Member</div>
+        <button class="modal-close-btn" onclick="closeAddMemberModal()">✕</button>
+      </div>
+
+      <div class="modal-field">
+        <label class="modal-label">Member Name & Avatar:</label>
+        <div style="display: flex; gap: 6px;">
+          <select id="newMemberAvatar" class="modal-input" style="width: 70px;">
+            <option value="👤">👤</option>
+            <option value="👧">👧</option>
+            <option value="🧑">🧑</option>
+            <option value="👵">👵</option>
+            <option value="👴">👴</option>
+            <option value="🏋️">🏋️</option>
+          </select>
+          <input type="text" id="newMemberName" class="modal-input" style="flex: 1;" placeholder="e.g. Sister, Grandpa">
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="modal-field">
+          <label class="modal-label">Age (years):</label>
+          <input type="number" id="newMemberAge" class="modal-input" placeholder="25" value="25">
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Daily Calories (kcal):</label>
+          <input type="number" id="newMemberCal" class="modal-input" placeholder="2000" value="2000">
+        </div>
+      </div>
+
+      <div class="modal-field">
+        <label class="modal-label">Health & Dietary Focus:</label>
+        <select id="newMemberBadge" class="modal-input">
+          <option value="Balanced Diet (Vitality)">⚖️ Balanced Diet & Active Vitality</option>
+          <option value="Blood Sugar Care (Steady Glucose)">🩸 Blood Sugar Care (Low Glycemic)</option>
+          <option value="Muscle Recovery (Hypertrophy)">💪 Muscle Recovery (High Protein)</option>
+          <option value="Heart Health (Low Salt & BP)">❤️ Heart Health (Low Sodium & K+)</option>
+        </select>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="modal-field">
+          <label class="modal-label">Target Protein (g):</label>
+          <input type="number" id="newMemberProt" class="modal-input" placeholder="65" value="65">
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Target Fiber (g):</label>
+          <input type="number" id="newMemberFib" class="modal-input" placeholder="28" value="28">
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 6px;">
+        <button class="btn-action" style="padding: 8px 16px; font-size: 0.76rem;" onclick="closeAddMemberModal()">Cancel</button>
+        <button class="btn-action btn-start" style="padding: 8px 18px; font-size: 0.76rem;" onclick="submitNewMember()">Save Member ➔</button>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>

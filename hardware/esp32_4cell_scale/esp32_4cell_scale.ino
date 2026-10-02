@@ -9,7 +9,7 @@
 // ================================================================
 const char* ssid        = "vivo27";
 const char* password    = "erenhari";
-const char* SERVER_IP   = "10.126.26.230"; // THIS LAPTOP'S IP
+const char* SERVER_IP   = "10.125.203.230"; // THIS LAPTOP'S IP
 const int   SERVER_PORT = 8000;
 float BASE_FACTOR       = -900.774; 
 

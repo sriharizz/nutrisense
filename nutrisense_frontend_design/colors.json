@@ -1,0 +1,59 @@
+{
+  "themeName": "NutriSense Organic Cyber-Physical Design System",
+  "version": "1.0.0",
+  "palette": {
+    "primaryEmerald": {
+      "hex": "#16a34a",
+      "rgb": "rgb(22, 163, 74)",
+      "hsl": "hsl(142, 76%, 36%)",
+      "role": "Primary brand color, CTAs, active indicators"
+    },
+    "forestGreenDark": {
+      "hex": "#14532d",
+      "rgb": "rgb(20, 83, 45)",
+      "hsl": "hsl(144, 61%, 20%)",
+      "role": "Brand text, pill badges, high-contrast accents"
+    },
+    "freshMintLight": {
+      "hex": "#dcfce7",
+      "rgb": "rgb(220, 252, 231)",
+      "hsl": "hsl(141, 79%, 93%)",
+      "role": "Icon containers, badges, ambient aura highlights"
+    },
+    "limeGreenMorning": {
+      "hex": "#84cc16",
+      "rgb": "rgb(132, 204, 22)",
+      "hsl": "hsl(84, 81%, 44%)",
+      "role": "Radial background gradient layer (top-left)"
+    },
+    "warmCitrusAmber": {
+      "hex": "#f59e0b",
+      "rgb": "rgb(245, 158, 11)",
+      "hsl": "hsl(38, 92%, 50%)",
+      "role": "Radial background gradient layer (top-right)"
+    },
+    "backgroundGradient": {
+      "start": "#f0fdf4",
+      "middle": "#e6f7ec",
+      "end": "#daf0e2",
+      "formula": "radial-gradient(ellipse at 50% 12%, rgba(34, 197, 94, 0.22) 0%, transparent 60%), radial-gradient(circle at 12% 25%, rgba(132, 204, 22, 0.15) 0%, transparent 45%), radial-gradient(circle at 88% 18%, rgba(245, 158, 11, 0.14) 0%, transparent 40%), radial-gradient(circle at 50% 92%, rgba(16, 185, 129, 0.20) 0%, transparent 50%), linear-gradient(150deg, #f0fdf4 0%, #e6f7ec 45%, #daf0e2 100%)"
+    },
+    "textTypography": {
+      "primaryHeading": "#0f172a",
+      "deepForestText": "#091e11",
+      "slateBody": "#334155",
+      "muted": "#64748b"
+    },
+    "glassmorphism": {
+      "background": "rgba(255, 255, 255, 0.88)",
+      "border": "1.5px solid rgba(255, 255, 255, 0.95)",
+      "backdropFilter": "blur(16px)",
+      "boxShadow": "0 4px 20px rgba(0, 0, 0, 0.05)"
+    }
+  },
+  "typography": {
+    "bodyFont": "'Plus Jakarta Sans', sans-serif",
+    "headingFont": "'Outfit', sans-serif",
+    "scriptFont": "'Caveat', cursive"
+  }
+}
